@@ -82,12 +82,12 @@ int8_t convert(int8_t value) {
 int main(void) {
   uint64_t start = ns();
   char *s = calloc(1, (kmer_Length + 1) * sizeof(int8_t));
-  memset(s, 'A', kmer_Length);
+  memset(s, 'A', kmer_length);
   int64_t counter = 1;
   while (!is_done(s)) {
     counter += 1;
     // printf("%s\n", s);
-    for (int i = 0; i < kmer_Length; i++) {
+    for (int i = 0; i < kmer_length; i++) {
       char c = s[i];
       s[i] = convert(c);
       if (c != 'T') {
