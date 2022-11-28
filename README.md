@@ -24,6 +24,9 @@ In order to understand the background of this test, visit the original article h
 | Python 3.11 | 13 | 25.221s | Win11 / i9-12900KF |
 | Python 3.11 | 14 | 99.665s | Win11 / i9-12900KF |
 | Python 3.11 | 15 | 414.169s | Win11 / i9-12900KF |
+| Rust 1.65.0 | 13 | 2.818s | Win11 / i9-12900KF |
+| Rust 1.65.0 | 14 | 11.307s | Win11 / i9-12900KF |
+| Rust 1.65.0 | 15 | 45.311s | Win11 / i9-12900KF |
 
 
 # Now it's your turn!
