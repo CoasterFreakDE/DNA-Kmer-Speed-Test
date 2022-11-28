@@ -42,11 +42,11 @@ int main()
   while (!is_done(chars))
   {
     counter += 1;
+    // std::cout << std::string(std::begin(chars), std::end(chars)) << std::endl;
     for (int i = 0; i < kmer_length; i++)
     {
       char c = chars[i];
       chars[i] = convert(c);
-      // std::cout << std::string(std::begin(chars), std::end(chars)) << std::endl;
       if (c != 'T')
       {
         break;
