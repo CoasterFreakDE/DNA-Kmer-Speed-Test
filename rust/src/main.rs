@@ -7,8 +7,9 @@ fn main() {
     println!("Start");
 
     let opt = "ACGT";
+    let end = opt.chars().last().unwrap();
     let mut s = "".to_owned();
-    let mut s_last= "".to_owned();
+    let mut s_last = "".to_owned();
     let len_str = 15;
 
     for _ in 0..len_str {
@@ -19,6 +20,8 @@ fn main() {
         s_last += &opt.chars().last().unwrap().to_string();
     }
 
+    let s_last: Vec<char> = s_last.chars().collect();
+    let mut s: Vec<char> = s.chars().collect();
     let mut counter = 1;
 
     while s.eq(&s_last) == false {
@@ -26,17 +29,21 @@ fn main() {
 
         // println!("kmer: {} ", s);
         for i in 0..len_str {
-            if s.chars().nth(i).eq(&opt.chars().last()) {
-                s.replace_range(i..(i + 1), convert(s.chars().nth(i).unwrap()).to_string().as_str());
-            } else {
-                s.replace_range(i..(i + 1), convert(s.chars().nth(i).unwrap()).to_string().as_str());
+            let c: char = s[i];
+            let new = convert(c);
+            s[i] = new;
+            if !c.eq(&end) {
                 break;
             }
         }
     }
 
     let duration = start.elapsed();
-    println!("Nummer of generated k-mers: {} - took {}ms", counter, duration.as_millis());
+    println!(
+        "Nummer of generated k-mers: {} - took {}ms",
+        counter,
+        duration.as_millis()
+    );
     println!("End");
 }
 
@@ -47,5 +54,5 @@ fn convert(c: char) -> char {
         'G' => 'T',
         'T' => 'A',
         _ => ' ',
-    }
+    };
 }
