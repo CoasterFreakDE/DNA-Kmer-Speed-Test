@@ -20,18 +20,18 @@ func convert(c byte) byte {
 	return ' '
 }
 
-const lenth = 15
+const length = 15
 
 func main() {
 	start := time.Now()
 	base := "ACGT"
 	end := base[len(base) - 1]
 	s := ""
-	for i := 0; i < lenth; i++ {
+	for i := 0; i < length; i++ {
 		s += string(base[0])
 	}
 	sLast := ""
-	for i := 0; i < lenth; i++ {
+	for i := 0; i < length; i++ {
 		sLast += string(end)
 	}
 	ss := []byte(s)
@@ -39,8 +39,8 @@ func main() {
 	counter := uint64(1)
 	for !bytes.Equal(ss, ssLast) {
 		counter++
-		fmt.Println(string(ss))
-		for i := 0; i < lenth; i++ {
+		// fmt.Println(string(ss))
+		for i := 0; i < length; i++ {
 			old := ss[i]
 			ss[i] = convert(old)
 			if old != end {
