@@ -81,7 +81,7 @@ int8_t convert(int8_t value) {
 
 int main(void) {
   uint64_t start = ns();
-  char *s = calloc(1, (kmer_Length + 1) * sizeof(int8_t));
+  char *s = calloc(1, (kmer_length + 1) * sizeof(int8_t));
   memset(s, 'A', kmer_length);
   int64_t counter = 1;
   while (!is_done(s)) {
