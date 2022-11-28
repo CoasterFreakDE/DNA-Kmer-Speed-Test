@@ -10,7 +10,7 @@ fn main() {
     let end = opt.chars().last().unwrap();
     let mut s = "".to_owned();
     let mut s_last = "".to_owned();
-    let len_str = 15;
+    let len_str = 13;
 
     for _ in 0..len_str {
         s += &opt.chars().nth(0).unwrap().to_string();
@@ -22,7 +22,7 @@ fn main() {
 
     let s_last: Vec<char> = s_last.chars().collect();
     let mut s: Vec<char> = s.chars().collect();
-    let mut counter = 1;
+    let mut counter: i128 = 1;
 
     while s.eq(&s_last) == false {
         counter += 1;
