@@ -16,13 +16,12 @@ const convert = c => {
   return " ";
 };
 
+const lenStr = parseInt(process.argv[2]);
 const timeStart = performance.now();
-console.log("Start");
 
 const opt = "ACGT";
 let s = "";
 let sLast = "";
-const lenStr = 13;
 
 for (let i = 0; i < lenStr; i++) {
   s += opt[0];

@@ -58,7 +58,7 @@ static uint64_t ns(void) {
 }
 
 bool is_done(char *s) {
-  for (int i = 0; i < kmer_Length; i++) {
+  for (int i = 0; i < kmer_length; i++) {
     if (s[i] != 'T')
       return false;
   }

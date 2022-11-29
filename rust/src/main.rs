@@ -4,13 +4,11 @@ fn main() {
     // get current nano time
     let start = Instant::now();
 
-    println!("Start");
-
     let opt = "ACGT";
     let end = opt.chars().last().unwrap();
     let mut s = "".to_owned();
     let mut s_last = "".to_owned();
-    let len_str = 13;
+    let len_str = std::env::args().nth(1).unwrap().parse::<usize>().unwrap();
 
     for _ in 0..len_str {
         s += &opt.chars().nth(0).unwrap().to_string();
@@ -44,7 +42,6 @@ fn main() {
         counter,
         duration.as_millis()
     );
-    println!("End");
 }
 
 fn convert(c: char) -> char {

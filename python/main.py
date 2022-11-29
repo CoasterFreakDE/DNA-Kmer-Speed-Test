@@ -1,5 +1,5 @@
 import time
-
+from sys import argv
 
 def convert(c):
 	if c == 'A':
@@ -13,12 +13,11 @@ def convert(c):
 
 
 time_start = time.time()
-print("Start")
 
 opt = "ACGT"
 s = ""
 s_last = ""
-len_str = 13
+len_str = int(argv[1])
 
 for i in range(len_str):
 	s += opt[0]
@@ -41,4 +40,3 @@ while s != s_last:
 # print(s)
 time_elapsed = time.time() - time_start
 print("Number of generated k-mers: {} - took {}ms".format(counter, time_elapsed * 1000))
-print("Finish!")
