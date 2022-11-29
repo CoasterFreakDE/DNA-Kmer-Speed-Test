@@ -3,6 +3,8 @@ package main
 import (
 	"bytes"
 	"fmt"
+	"os"
+	"strconv"
 	"time"
 )
 
@@ -20,9 +22,11 @@ func convert(c byte) byte {
 	return ' '
 }
 
-const length = 15
-
 func main() {
+	length, err := strconv.Atoi(os.Args[1])
+	if err != nil {
+		panic(err)
+	}
 	start := time.Now()
 	base := "ACGT"
 	end := base[len(base) - 1]
