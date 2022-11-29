@@ -6,4 +6,4 @@ CC=gcc
 default:
 	$(CC) $(CFLAGS) -Dkmer_length=$(LENGTH) main.c -o c
 	$(info C)
-	c
+	./c
