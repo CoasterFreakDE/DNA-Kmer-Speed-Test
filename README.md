@@ -21,16 +21,34 @@ In order to understand the background of this test, visit the original article h
 
 # Test Results
 
+### Python
+
 | Language | Kmer | Duration | (Optional) Runtime Env / OS |
 |----------|------|----------|-----------------------------|
 | Python 3.11 | 13 | 25.221s | Win11 / i9-12900KF |
 | Python 3.11 | 14 | 99.665s | Win11 / i9-12900KF |
 | Python 3.11 | 15 | 414.169s | Win11 / i9-12900KF |
+
+### Rust
+
+| Language | Kmer | Duration | (Optional) Runtime Env / OS |
+|----------|------|----------|-----------------------------|
 | Rust 1.65.0 | 13 | 0.204s | Win11 / i9-12900KF |
 | Rust 1.65.0 | 14 | 0.822s | Win11 / i9-12900KF |
 | Rust 1.65.0 | 15 | 3.322s | Win11 / i9-12900KF |
 | Rust 1.65.0 | 16 | 14.338s | Win11 / i9-12900KF |
 | Rust 1.65.0 | 17 | 54.414s | Win11 / i9-12900KF |
+
+### Go
+
+| Language | Kmer | Duration | (Optional) Runtime Env / OS |
+|----------|------|----------|-----------------------------|
+| Go 1.18.3 | 13 | 0.195s | Win11 / i9-12900KF |
+| Go 1.18.3 | 14 | 0.782s | Win11 / i9-12900KF |
+| Go 1.18.3 | 15 | 3.138s | Win11 / i9-12900KF |
+| Go 1.18.3 | 16 | 12.429s | Win11 / i9-12900KF |
+| Go 1.18.3 | 17 | 49.861s | Win11 / i9-12900KF |
+
 
 
 # Now it's your turn!
