@@ -1,1 +1,9 @@
 .idea
+*.exe
+*.dll
+*.so
+*.dylib
+*.class
+*.war
+*.ear
+*.beam
