@@ -130,6 +130,16 @@ In order to understand the background of this test, visit the original article h
 | 17 | 54.414s | Win11 / i9-12900KF |
 
 
+### php
+
+| Kmer | Duration | (Optional) Runtime Env / OS |
+|------|----------|-----------------------------|
+| 11 | 0.561s | Win11 / i9-12900KF |
+| 12 | 2.164s | Win11 / i9-12900KF |
+| 13 | 8.892s | Win11 / i9-12900KF |
+| 14 | 35.038s | Win11 / i9-12900KF |
+| 15 | 140.391s | Win11 / i9-12900KF |
+
 
 # Now it's your turn!
 
