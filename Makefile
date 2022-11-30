@@ -1,4 +1,4 @@
-LANGUAGES = c cpp erlang go java js perl python rust haskell
+LANGUAGES = c cpp erlang go java js perl python rust haskell csharp
 LENGTH = 13
 
 default: $(LANGUAGES) RUN
