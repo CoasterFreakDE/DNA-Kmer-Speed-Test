@@ -1,51 +1,46 @@
 using BenchmarkTools
-
-function convert(c::Char)
-  if c == 'A'
-    return 'C'
-  end
-  if c == 'C'
-    return 'G'
-  end
-  if c == 'G'
-    return 'T'
-  end
-  if c == 'T'
-    return 'A'
-  end
-  return ' '
-end
-
-const opt = "ACGT"
-
-function arrayEquals(a, b)
-  return all(x -> x[1] == x[2], zip(a, b))
-end
-
-function main(lenStr)
-  s = ""
-  sLast = ""
-  for i in 1:lenStr
-    s = s * opt[1]
-  end
-  for i in 1:lenStr
-    sLast = sLast * opt[end]
-  end
-  ss = collect(s)
-  ssLast = collect(sLast)
-  counter = 1
-  while !arrayEquals(ss, ssLast)
-    counter += 1
-    # println(ss)
-    for i in 1:lenStr
-      old = ss[i]
-      ss[i] = convert(old)
-      if old != opt[end]
-        break
-      end
+function convert(c)
+    if c == 'A'
+        return 'C'
     end
-  end
-  return counter
+    if c == 'C'
+        return 'G'
+    end
+    if c == 'G'
+        return 'T'
+    end
+    if c == 'T'
+        return 'A'
+    end
 end
-
-@btime main(5)
+@benchmark begin
+    println("Start")
+    opt = "ACGT"
+    s = ""
+    s_last = ""
+    len_str = 13
+    for i in 1:len_str
+        s *= opt[1]
+    end
+    for i in 1:len_str
+        s_last *= opt[end]
+    end
+    pos = 0
+    counter = 1
+    while s != s_last
+        counter += 1
+        for i in 1:len_str
+            if s[i] == opt[end]
+                s = s[1:i-1] * convert(s[i]) * s[i+1:end]
+            else
+                s = s[1:i-1] * convert(s[i]) * s[i+1:end]
+                break
+            end
+        end
+        # You can uncomment the next line to see all k-mers.
+        # println(s)
+    end
+   println("k-mers: ", counter)
+   # todo: add time taken (?)
+   exit()
+end
