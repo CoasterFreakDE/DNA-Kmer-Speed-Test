@@ -1,3 +1,4 @@
+<?php
 function convert($c) {
   if ($c === "A") {
     return "C";
