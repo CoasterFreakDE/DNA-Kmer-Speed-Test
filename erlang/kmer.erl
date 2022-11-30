@@ -13,7 +13,7 @@ calculate(N) ->
   Now = get_timestamp(),
   Kmers = calculate(N, string:copies("A", N), string:copies("T", N)),
   Delta = get_timestamp() - Now,
-  io:fwrite("Nummer of generated k-mers: ~p - took ~pms~n", [Kmers, Delta]).
+  io:fwrite("Number of generated k-mers: ~p - took ~pms~n", [Kmers, Delta]).
 
 calculate(N, Start, Stop) -> calculate(N, Start, Stop, 1).
 

@@ -38,7 +38,7 @@ fn main() {
 
     let duration = start.elapsed();
     println!(
-        "Nummer of generated k-mers: {} - took {}ms",
+        "Number of generated k-mers: {} - took {}ms",
         counter,
         duration.as_millis()
     );

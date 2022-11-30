@@ -30,7 +30,7 @@ executable haskell
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
     build-depends:
-        base ^>=4.16.1.0,
+        base ^>=4.15.1.0,
         clock == 0.8.3,
         formatting == 7.2.0
     hs-source-dirs:   app
