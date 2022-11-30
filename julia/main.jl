@@ -41,6 +41,5 @@ end
         # println(s)
     end
    println("k-mers: ", counter)
-   # todo: add time taken (?)
    exit()
 end
