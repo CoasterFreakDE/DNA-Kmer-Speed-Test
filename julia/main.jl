@@ -37,7 +37,6 @@ end
                 break
             end
         end
-        # You can uncomment the next line to see all k-mers.
         # println(s)
     end
    println("k-mers: ", counter)
