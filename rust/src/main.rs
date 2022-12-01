@@ -22,7 +22,7 @@ fn main() {
     let mut s: Vec<char> = s.chars().collect();
     let mut counter: i128 = 1;
 
-    while s.eq(&s_last) == false {
+    while !s.eq(&s_last) {
         counter += 1;
 
         // println!("kmer: {} ", s);
