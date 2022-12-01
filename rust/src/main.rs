@@ -10,13 +10,12 @@ fn main() {
     let mut s = String::with_capacity(len_str);
     let mut s_last = String::with_capacity(len_str);
 
+    let first = opt.chars().nth(0).unwrap().to_string();
+    let last = opt.chars().last().unwrap().to_string();
 
     for _ in 0..len_str {
-        s += &opt.chars().nth(0).unwrap().to_string();
-    }
-
-    for _ in 0..len_str {
-        s_last += &opt.chars().last().unwrap().to_string();
+        s += &first;
+        s_last += &last;
     }
 
     let s_last: Vec<char> = s_last.chars().collect();
