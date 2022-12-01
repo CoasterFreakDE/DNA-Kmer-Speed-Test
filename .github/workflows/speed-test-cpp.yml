@@ -1,22 +1,25 @@
 name: Kmer Speed Test [C++]
 
+env:
+  lang: cpp
+
 on:
   workflow_dispatch:
   push:
     branches: [ "main" ]
     paths: 
-    - "cpp"
+    - ${{ env.lang }}
   pull_request:
     branches: [ "main" ]
     paths: 
-    - "cpp"
+    - ${{ env.lang }}
 
 jobs:
   kmer:
     strategy:
       matrix:
         lang: 
-        - "cpp"
+        - ${{ env.lang }}
         kmer: [11, 12, 13, 14, 15, 16, 17]
     runs-on: ubuntu-latest
 
