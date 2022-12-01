@@ -27,7 +27,6 @@ jobs:
       run: mkdir results
     - name: Run Tests
       run: echo "$(make LENGTH=${{ matrix.kmer }} LANGUAGES="${{ env.lang }}" -s)" > results/kmer_${{ matrix.kmer }}_${{ env.lang }}.rawresult.txt
-      id: test
     - name: Save result for kmer ${{ matrix.kmer }} ${{ env.lang }}
       uses: actions/upload-artifact@master
       with:
@@ -79,32 +78,25 @@ jobs:
           path: results/kmer_17_${{ env.lang }}.rawresult.txt
       - name: Extract kmer11 time from result
         run: |
-          echo "##[set-output name=time;]$(cat results/kmer_11_${{ env.lang }}.rawresult.txt | sed -e '/.* - took .*/!d' | sed -r 's/Number of generated k-mers: .* - took (.*)/\1/g')"
-        id: kmer11
+          echo "kmer11=$(cat results/kmer_11_${{ env.lang }}.rawresult.txt | sed -e '/.* - took .*/!d' | sed -r 's/Number of generated k-mers: .* - took (.*)/\1/g')" >> $GITHUB_OUTPUT
       - name: Extract kmer12 time from result
         run: |
-          echo "##[set-output name=time;]$(cat results/kmer_12_${{ env.lang }}.rawresult.txt | sed -e '/.* - took .*/!d' | sed -r 's/Number of generated k-mers: .* - took (.*)/\1/g')"
-        id: kmer12
+          echo "kmer12=$(cat results/kmer_12_${{ env.lang }}.rawresult.txt | sed -e '/.* - took .*/!d' | sed -r 's/Number of generated k-mers: .* - took (.*)/\1/g')" >> $GITHUB_OUTPUT
       - name: Extract kmer13 time from result
         run: |
-          echo "##[set-output name=time;]$(cat results/kmer_13_${{ env.lang }}.rawresult.txt | sed -e '/.* - took .*/!d' | sed -r 's/Number of generated k-mers: .* - took (.*)/\1/g')"
-        id: kmer13
+          echo "kmer13=$(cat results/kmer_13_${{ env.lang }}.rawresult.txt | sed -e '/.* - took .*/!d' | sed -r 's/Number of generated k-mers: .* - took (.*)/\1/g')" >> $GITHUB_OUTPUT
       - name: Extract kmer14 time from result
         run: |
-          echo "##[set-output name=time;]$(cat results/kmer_14_${{ env.lang }}.rawresult.txt | sed -e '/.* - took .*/!d' | sed -r 's/Number of generated k-mers: .* - took (.*)/\1/g')"
-        id: kmer14
+          echo "kmer14=$(cat results/kmer_14_${{ env.lang }}.rawresult.txt | sed -e '/.* - took .*/!d' | sed -r 's/Number of generated k-mers: .* - took (.*)/\1/g')" >> $GITHUB_OUTPUT
       - name: Extract kmer15 time from result
         run: |
-          echo "##[set-output name=time;]$(cat results/kmer_15_${{ env.lang }}.rawresult.txt | sed -e '/.* - took .*/!d' | sed -r 's/Number of generated k-mers: .* - took (.*)/\1/g')"
-        id: kmer15
+          echo "kmer15=$(cat results/kmer_15_${{ env.lang }}.rawresult.txt | sed -e '/.* - took .*/!d' | sed -r 's/Number of generated k-mers: .* - took (.*)/\1/g')" >> $GITHUB_OUTPUT
       - name: Extract kmer16 time from result
         run: |
-          echo "##[set-output name=time;]$(cat results/kmer_16_${{ env.lang }}.rawresult.txt | sed -e '/.* - took .*/!d' | sed -r 's/Number of generated k-mers: .* - took (.*)/\1/g')"
-        id: kmer16
+          echo "kmer16=$(cat results/kmer_16_${{ env.lang }}.rawresult.txt | sed -e '/.* - took .*/!d' | sed -r 's/Number of generated k-mers: .* - took (.*)/\1/g')" >> $GITHUB_OUTPUT
       - name: Extract kmer17 time from result
         run: |
-          echo "##[set-output name=time;]$(cat results/kmer_17_${{ env.lang }}.rawresult.txt | sed -e '/.* - took .*/!d' | sed -r 's/Number of generated k-mers: .* - took (.*)/\1/g')"
-        id: kmer17
+          echo "kmer17=$(cat results/kmer_17_${{ env.lang }}.rawresult.txt | sed -e '/.* - took .*/!d' | sed -r 's/Number of generated k-mers: .* - took (.*)/\1/g')" >> $GITHUB_OUTPUT
       - name: Build Table
         run: |
           echo "" > results/kmer_${{ env.lang }}.md
@@ -112,13 +104,13 @@ jobs:
           echo "" > results/kmer_${{ env.lang }}.md
           echo "| Kmer | Duration | (Optional) Runtime Env / OS |" >> results/kmer_${{ env.lang }}.md
           echo "|------|----------|-----------------------------|" >> results/kmer_${{ env.lang }}.md
-          echo "| 11 | ${{ steps.kmer11.outputs.time }} | GitHub Actions / ubuntu-latest |" >> results/kmer_${{ env.lang }}.md
-          echo "| 12 | ${{ steps.kmer12.outputs.time }} | GitHub Actions / ubuntu-latest |" >> results/kmer_${{ env.lang }}.md
-          echo "| 13 | ${{ steps.kmer13.outputs.time }} | GitHub Actions / ubuntu-latest |" >> results/kmer_${{ env.lang }}.md
-          echo "| 14 | ${{ steps.kmer14.outputs.time }} | GitHub Actions / ubuntu-latest |" >> results/kmer_${{ env.lang }}.md
-          echo "| 15 | ${{ steps.kmer15.outputs.time }} | GitHub Actions / ubuntu-latest |" >> results/kmer_${{ env.lang }}.md
-          echo "| 16 | ${{ steps.kmer16.outputs.time }} | GitHub Actions / ubuntu-latest |" >> results/kmer_${{ env.lang }}.md
-          echo "| 17 | ${{ steps.kmer17.outputs.time }} | GitHub Actions / ubuntu-latest |" >> results/kmer_${{ env.lang }}.md
+          echo "| 11 | ${{ env.kmer11 }} | GitHub Actions / ubuntu-latest |" >> results/kmer_${{ env.lang }}.md
+          echo "| 12 | ${{ env.kmer12 }} | GitHub Actions / ubuntu-latest |" >> results/kmer_${{ env.lang }}.md
+          echo "| 13 | ${{ env.kmer13 }} | GitHub Actions / ubuntu-latest |" >> results/kmer_${{ env.lang }}.md
+          echo "| 14 | ${{ env.kmer14 }} | GitHub Actions / ubuntu-latest |" >> results/kmer_${{ env.lang }}.md
+          echo "| 15 | ${{ env.kmer15 }} | GitHub Actions / ubuntu-latest |" >> results/kmer_${{ env.lang }}.md
+          echo "| 16 | ${{ env.kmer16 }} | GitHub Actions / ubuntu-latest |" >> results/kmer_${{ env.lang }}.md
+          echo "| 17 | ${{ env.kmer17 }} | GitHub Actions / ubuntu-latest |" >> results/kmer_${{ env.lang }}.md
       - name: Create Pull Request with Results
         uses: peter-evans/create-pull-request@v4
         with:
