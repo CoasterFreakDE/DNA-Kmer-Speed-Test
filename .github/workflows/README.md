@@ -2,7 +2,7 @@ Example config:
 
 Replace <lang> with the folder name of the language and <display> with the Display name.
 
-speed-test-<lang>.yml
+speed-test-\<lang\>.yml
 ```yml
 name: Kmer Speed Test [<display>]
 
