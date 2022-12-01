@@ -47,7 +47,7 @@ jobs:
         with:
           path: results/
       - name: Install sd
-        run: apt install sd -y
+        run: sudo apt install sd -y
       - name: Extract kmer11 time from result
         id: kmer11
         run: |
