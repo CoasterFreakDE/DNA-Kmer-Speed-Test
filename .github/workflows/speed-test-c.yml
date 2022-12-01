@@ -39,25 +39,32 @@ jobs:
     
     steps:
       - name: Extract kmer11 time from result
-        run: echo "##[set-output name=time;]$(cat results/kmer_11_c.rawresult.txt | sed -e '/.* - took .*/!d' | sed -r 's/Number of generated k-mers: .* - took (.*)/\1/g')"
+        run: |
+          echo "##[set-output name=time;]$(cat results/kmer_11_c.rawresult.txt | sed -e '/.* - took .*/!d' | sed -r 's/Number of generated k-mers: .* - took (.*)/\1/g')"
         id: kmer11
       - name: Extract kmer12 time from result
-        run: echo "##[set-output name=time;]$(cat results/kmer_12_c.rawresult.txt | sed -e '/.* - took .*/!d' | sed -r 's/Number of generated k-mers: .* - took (.*)/\1/g')"
+        run: |
+          echo "##[set-output name=time;]$(cat results/kmer_12_c.rawresult.txt | sed -e '/.* - took .*/!d' | sed -r 's/Number of generated k-mers: .* - took (.*)/\1/g')"
         id: kmer12
       - name: Extract kmer13 time from result
-        run: echo "##[set-output name=time;]$(cat results/kmer_13_c.rawresult.txt | sed -e '/.* - took .*/!d' | sed -r 's/Number of generated k-mers: .* - took (.*)/\1/g')"
+        run: |
+          echo "##[set-output name=time;]$(cat results/kmer_13_c.rawresult.txt | sed -e '/.* - took .*/!d' | sed -r 's/Number of generated k-mers: .* - took (.*)/\1/g')"
         id: kmer13
       - name: Extract kmer14 time from result
-        run: echo "##[set-output name=time;]$(cat results/kmer_14_c.rawresult.txt | sed -e '/.* - took .*/!d' | sed -r 's/Number of generated k-mers: .* - took (.*)/\1/g')"
+        run: |
+          echo "##[set-output name=time;]$(cat results/kmer_14_c.rawresult.txt | sed -e '/.* - took .*/!d' | sed -r 's/Number of generated k-mers: .* - took (.*)/\1/g')"
         id: kmer14
       - name: Extract kmer15 time from result
-        run: echo "##[set-output name=time;]$(cat results/kmer_15_c.rawresult.txt | sed -e '/.* - took .*/!d' | sed -r 's/Number of generated k-mers: .* - took (.*)/\1/g')"
+        run: |
+          echo "##[set-output name=time;]$(cat results/kmer_15_c.rawresult.txt | sed -e '/.* - took .*/!d' | sed -r 's/Number of generated k-mers: .* - took (.*)/\1/g')"
         id: kmer15
       - name: Extract kmer16 time from result
-        run: echo "##[set-output name=time;]$(cat results/kmer_16_c.rawresult.txt | sed -e '/.* - took .*/!d' | sed -r 's/Number of generated k-mers: .* - took (.*)/\1/g')"
+        run: |
+          echo "##[set-output name=time;]$(cat results/kmer_16_c.rawresult.txt | sed -e '/.* - took .*/!d' | sed -r 's/Number of generated k-mers: .* - took (.*)/\1/g')"
         id: kmer16
       - name: Extract kmer17 time from result
-        run: echo "##[set-output name=time;]$(cat results/kmer_17_c.rawresult.txt | sed -e '/.* - took .*/!d' | sed -r 's/Number of generated k-mers: .* - took (.*)/\1/g')"
+        run: |
+          echo "##[set-output name=time;]$(cat results/kmer_17_c.rawresult.txt | sed -e '/.* - took .*/!d' | sed -r 's/Number of generated k-mers: .* - took (.*)/\1/g')"
         id: kmer17
       - name: Build Table
         run: |
