@@ -39,6 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+      - uses: actions/checkout@v3
       - name: Create Result dir
         run: mkdir results
       - name: Download raw kmer11 result
