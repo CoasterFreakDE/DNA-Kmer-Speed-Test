@@ -1,6 +1,7 @@
 name: Kmer Speed Test [C]
 
 env:
+  display: "C"
   lang: "c"
 
 on:
@@ -78,6 +79,7 @@ jobs:
           path: results/kmer_17_${{ env.lang }}.rawresult.txt
       - name: Extract kmer11 time from result
         run: |
+          ls -la results/
           echo "kmer11=$(cat results/kmer_11_${{ env.lang }}.rawresult.txt | sed -e '/.* - took .*/!d' | sed -r 's/Number of generated k-mers: .* - took (.*)/\1/g')" >> $GITHUB_ENV
       - name: Extract kmer12 time from result
         run: |
@@ -100,7 +102,7 @@ jobs:
       - name: Build Table
         run: |
           echo "" > $GITHUB_STEP_SUMMARY
-          echo "### C" >> $GITHUB_STEP_SUMMARY
+          echo "### ${{ env.display }}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "| Kmer | Duration | (Optional) Runtime Env / OS |" >> $GITHUB_STEP_SUMMARY
           echo "|------|----------|-----------------------------|" >> $GITHUB_STEP_SUMMARY
