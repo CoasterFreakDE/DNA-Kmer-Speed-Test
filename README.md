@@ -40,6 +40,12 @@ In order to understand the background of this test, visit the original article h
 
 # Test Results
 
+##### Automated test results
+
+You can find the automated test results at https://github.com/CoasterFreakDE/DNA-Kmer-Speed-Test/actions
+Note that the results are not 100% accurate, because the test is run on a shared server with other processes running in the background.
+
+
 ### C
 
 | Kmer | Duration | (Optional) Runtime Env / OS |
