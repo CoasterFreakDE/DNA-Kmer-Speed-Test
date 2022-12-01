@@ -15,11 +15,11 @@ on:
   push:
     branches: [ "main" ]
     paths: 
-    - "<lang>"
+    - "<lang>/**"
   pull_request:
     branches: [ "main" ]
     paths: 
-    - "<lang>"
+    - "<lang>/**"
 
 jobs:
   kmer:
@@ -95,5 +95,4 @@ jobs:
           echo "| 15 | ${{ steps.kmer15.outputs.TIME }} | GitHub Actions / ubuntu-latest |" >> $GITHUB_STEP_SUMMARY
           echo "| 16 | ${{ steps.kmer16.outputs.TIME }} | GitHub Actions / ubuntu-latest |" >> $GITHUB_STEP_SUMMARY
           echo "| 17 | ${{ steps.kmer17.outputs.TIME }} | GitHub Actions / ubuntu-latest |" >> $GITHUB_STEP_SUMMARY
-
 ```
