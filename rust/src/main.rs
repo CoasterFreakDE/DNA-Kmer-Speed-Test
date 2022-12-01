@@ -6,9 +6,10 @@ fn main() {
 
     let opt = "ACGT";
     let end = opt.chars().last().unwrap();
-    let mut s = "".to_owned();
-    let mut s_last = "".to_owned();
     let len_str = std::env::args().nth(1).unwrap().parse::<usize>().unwrap();
+    let mut s = String::with_capacity(len_str);
+    let mut s_last = String::with_capacity(len_str);
+
 
     for _ in 0..len_str {
         s += &opt.chars().nth(0).unwrap().to_string();
