@@ -8,18 +8,18 @@ on:
   push:
     branches: [ "main" ]
     paths: 
-    - ${{ env.lang }}
+    - "cpp"
   pull_request:
     branches: [ "main" ]
     paths: 
-    - ${{ env.lang }}
+    - "cpp"
 
 jobs:
   kmer:
     strategy:
       matrix:
         lang: 
-        - ${{ env.lang }}
+        - "cpp"
         kmer: [11, 12, 13, 14, 15, 16, 17]
     runs-on: ubuntu-latest
 
