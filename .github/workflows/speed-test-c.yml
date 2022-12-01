@@ -104,14 +104,10 @@ jobs:
           echo "" > results/kmer_${{ env.lang }}.md
           echo "| Kmer | Duration | (Optional) Runtime Env / OS |" >> results/kmer_${{ env.lang }}.md
           echo "|------|----------|-----------------------------|" >> results/kmer_${{ env.lang }}.md
-          echo "| 11 | ${{ env.kmer11 }} | GitHub Actions / ubuntu-latest |" >> results/kmer_${{ env.lang }}.md
-          echo "| 12 | ${{ env.kmer12 }} | GitHub Actions / ubuntu-latest |" >> results/kmer_${{ env.lang }}.md
-          echo "| 13 | ${{ env.kmer13 }} | GitHub Actions / ubuntu-latest |" >> results/kmer_${{ env.lang }}.md
-          echo "| 14 | ${{ env.kmer14 }} | GitHub Actions / ubuntu-latest |" >> results/kmer_${{ env.lang }}.md
-          echo "| 15 | ${{ env.kmer15 }} | GitHub Actions / ubuntu-latest |" >> results/kmer_${{ env.lang }}.md
-          echo "| 16 | ${{ env.kmer16 }} | GitHub Actions / ubuntu-latest |" >> results/kmer_${{ env.lang }}.md
-          echo "| 17 | ${{ env.kmer17 }} | GitHub Actions / ubuntu-latest |" >> results/kmer_${{ env.lang }}.md
-      - name: Create Pull Request with Results
-        uses: peter-evans/create-pull-request@v4
-        with:
-          add-paths: results/kmer_${{ env.lang }}.md
+          echo "| 11 | ${{ env.kmer11 }} | GitHub Actions / ubuntu-latest |" >> $GITHUB_STEP_SUMMARY
+          echo "| 12 | ${{ env.kmer12 }} | GitHub Actions / ubuntu-latest |" >> $GITHUB_STEP_SUMMARY
+          echo "| 13 | ${{ env.kmer13 }} | GitHub Actions / ubuntu-latest |" >> $GITHUB_STEP_SUMMARY
+          echo "| 14 | ${{ env.kmer14 }} | GitHub Actions / ubuntu-latest |" >> $GITHUB_STEP_SUMMARY
+          echo "| 15 | ${{ env.kmer15 }} | GitHub Actions / ubuntu-latest |" >> $GITHUB_STEP_SUMMARY
+          echo "| 16 | ${{ env.kmer16 }} | GitHub Actions / ubuntu-latest |" >> $GITHUB_STEP_SUMMARY
+          echo "| 17 | ${{ env.kmer17 }} | GitHub Actions / ubuntu-latest |" >> $GITHUB_STEP_SUMMARY
