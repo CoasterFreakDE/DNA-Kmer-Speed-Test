@@ -22,6 +22,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - uses: actions/setup-haskell@v1
+      with:
+        ghc-version: '8.10.3'
+        cabal-version: '3.2'
     - name: Create Result dir
       run: mkdir results
     - name: Run Tests
