@@ -46,6 +46,25 @@ You can find the automated test results at https://github.com/CoasterFreakDE/DNA
 Note that the results are not 100% accurate, because the test is run on a shared server with other processes running in the background.
 
 
+## Comparison of the languages
+
+| Language | Kmer 11 | Kmer 12 | Kmer 13 | Kmer 14 | Kmer 15 | Kmer 16 | Kmer 17 | (Optional) Runtime Env / OS |
+|----------|---------|---------|---------|---------|---------|---------|---------|------------------------------|
+| C | 3ms | 12ms | 45ms | 181ms | 753ms | 2.887s | 12.926s | Win11 / i9-12900KF |
+| C++ | 3ms | 11ms | 55ms | 309ms | 1.062s | 4.149s | 15.784s | Win11 / i9-12900KF |
+| Rust | 12ms | 50ms | 202ms | 805ms | 3.322s | 14.338s | 54.414s | Win11 / i9-12900KF |
+| Go | 13ms | 53ms | 213ms | 835ms | 3.553s | 12.429s | 49.861s | Win11 / i9-12900KF |
+| Java | 17ms | 50ms | 158ms | 599ms | 2.703s | / | / | Win11 / i9-12900KF |
+| JavaScript | 58ms | 225ms | 894ms | 3.467s | 14.543s | / | / | Win11 / i9-12900KF |
+| C# | 98ms | 333ms | 1.207s | 4.588s | 18.205s | 72.196s | 265.764s | Win11 / i9-12900KF |
+| Erlang | 375ms | 1.607s | 6.397s | 25.117s | 105.529s | / | / | Win11 / i9-12900KF |
+| php | 561ms | 2.164s | 8.892s | 35.038s | 140.391s | / | / | Win11 / i9-12900KF |
+| Perl | 643ms | 2.568s | 10.182s | 41.137s | 169.598s | / | / | Win11 / i9-12900KF |
+| Python | 2.266s | 8.850s | 35.374s | 99.665s | 414.169s | / | / | Win11 / i9-12900KF |
+
+
+## Splitting the results into languages
+
 ### C
 
 | Kmer | Duration | (Optional) Runtime Env / OS |
@@ -69,6 +88,18 @@ Note that the results are not 100% accurate, because the test is run on a shared
 | 15 | 1.062s | Win11 / i9-12900KF |
 | 16 | 4.149s | Win11 / i9-12900KF |
 | 17 | 15.784s | Win11 / i9-12900KF |
+
+### C#
+
+| Kmer | Duration | (Optional) Runtime Env / OS |
+|------|----------|-----------------------------|
+| 11 | 0.098s | Win11 / i9-12900KF |
+| 12 | 0.333s | Win11 / i9-12900KF |
+| 13 | 1,207s | Win11 / i9-12900KF |
+| 14 | 4.588s | Win11 / i9-12900KF |
+| 15 | 18.205s | Win11 / i9-12900KF |
+| 16 | 72.196s | Win11 / i9-12900KF |
+| 17 | 265.764s | Win11 / i9-12900KF |
 
 ### Erlang
 
