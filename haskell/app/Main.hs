@@ -14,7 +14,7 @@ main = do
   count <- calculate num
   end <- getTime Monotonic
   let time = format timeSpecs start end
-  putStrLn (printf "Number of generated kmers: %d - took %s" count time)
+  putStrLn (printf "Number of generated k-mers: %d - took %s" count time)
 
 calculate :: Int -> IO Int
 calculate len = generate len (concat (replicate len "A")) (concat (replicate len "T")) 1

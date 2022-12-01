@@ -1,31 +1,31 @@
-name: Kmer Speed Test [Haskell]
+name: Kmer Speed Test [PHP]
 
 on:
   workflow_dispatch:
   push:
     branches: [ "main" ]
     paths: 
-    - "haskell"
+    - "php"
   pull_request:
     branches: [ "main" ]
     paths: 
-    - "haskell"
+    - "php"
 
 jobs:
   kmer:
     strategy:
       matrix:
         lang: 
-        - "haskell"
+        - "php"
         kmer: [11, 12, 13, 14, 15, 16, 17]
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
-    - uses: actions/setup-haskell@v1
+    - name: Setup PHP with PECL extension
+      uses: shivammathur/setup-php@v2
       with:
-        ghc-version: '8.10.3'
-        cabal-version: '3.2'
+        php-version: '8.1'
     - name: Create Result dir
       run: mkdir results
     - name: Run Tests

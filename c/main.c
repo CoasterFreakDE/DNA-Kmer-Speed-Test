@@ -96,5 +96,5 @@ int main(void) {
     }
   }
   uint64_t delta = ((ns() - start) / 1000) / 1000;
-  printf("Nummer of generated k-mers: %lld - took %lldms\n", counter, delta);
+  printf("Number of generated k-mers: %lld - took %lldms\n", counter, delta);
 }
