@@ -9,11 +9,11 @@ on:
   push:
     branches: [ "main" ]
     paths: 
-    - "cpp"
+    - "cpp/**"
   pull_request:
     branches: [ "main" ]
     paths: 
-    - "cpp"
+    - "cpp/**"
 
 jobs:
   kmer:
