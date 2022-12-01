@@ -39,6 +39,43 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+      - name: Create Result dir
+        run: mkdir results
+      - name: Download raw kmer11 result
+        uses: actions/download-artifact@v3
+        with:
+          name: kmer_11_${{ env.lang }}.rawresult.txt
+          path: results/kmer_11_${{ env.lang }}.rawresult.txt
+      - name: Download raw kmer12 result
+        uses: actions/download-artifact@v3
+        with:
+          name: kmer_12_${{ env.lang }}.rawresult.txt
+          path: results/kmer_12_${{ env.lang }}.rawresult.txt
+      - name: Download raw kmer13 result
+        uses: actions/download-artifact@v3
+        with:
+          name: kmer_13_${{ env.lang }}.rawresult.txt
+          path: results/kmer_13_${{ env.lang }}.rawresult.txt
+      - name: Download raw kmer14 result
+        uses: actions/download-artifact@v3
+        with:
+          name: kmer_14_${{ env.lang }}.rawresult.txt
+          path: results/kmer_14_${{ env.lang }}.rawresult.txt
+      - name: Download raw kmer15 result
+        uses: actions/download-artifact@v3
+        with:
+          name: kmer_15_${{ env.lang }}.rawresult.txt
+          path: results/kmer_15_${{ env.lang }}.rawresult.txt
+      - name: Download raw kmer16 result
+        uses: actions/download-artifact@v3
+        with:
+          name: kmer_16_${{ env.lang }}.rawresult.txt
+          path: results/kmer_16_${{ env.lang }}.rawresult.txt
+      - name: Download raw kmer17 result
+        uses: actions/download-artifact@v3
+        with:
+          name: kmer_17_${{ env.lang }}.rawresult.txt
+          path: results/kmer_17_${{ env.lang }}.rawresult.txt
       - name: Extract kmer11 time from result
         run: |
           echo "##[set-output name=time;]$(cat results/kmer_11_${{ env.lang }}.rawresult.txt | sed -e '/.* - took .*/!d' | sed -r 's/Number of generated k-mers: .* - took (.*)/\1/g')"
