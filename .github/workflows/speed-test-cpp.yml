@@ -1,8 +1,5 @@
 name: Kmer Speed Test [C++]
 
-env:
-  lang: cpp
-
 on:
   workflow_dispatch:
   push:
