@@ -42,70 +42,39 @@ jobs:
       - uses: actions/checkout@v3
       - name: Create Result dir
         run: mkdir results
-      - name: Download raw kmer11 result
+      - name: Download raw results
         uses: actions/download-artifact@v3
         with:
-          name: kmer_11_${{ env.lang }}.rawresult.txt
-          path: results/
-      - name: Download raw kmer12 result
-        uses: actions/download-artifact@v3
-        with:
-          name: kmer_12_${{ env.lang }}.rawresult.txt
-          path: results/
-      - name: Download raw kmer13 result
-        uses: actions/download-artifact@v3
-        with:
-          name: kmer_13_${{ env.lang }}.rawresult.txt
-          path: results/
-      - name: Download raw kmer14 result
-        uses: actions/download-artifact@v3
-        with:
-          name: kmer_14_${{ env.lang }}.rawresult.txt
-          path: results/
-      - name: Download raw kmer15 result
-        uses: actions/download-artifact@v3
-        with:
-          name: kmer_15_${{ env.lang }}.rawresult.txt
-          path: results/
-      - name: Download raw kmer16 result
-        uses: actions/download-artifact@v3
-        with:
-          name: kmer_16_${{ env.lang }}.rawresult.txt
-          path: results/
-      - name: Download raw kmer17 result
-        uses: actions/download-artifact@v3
-        with:
-          name: kmer_17_${{ env.lang }}.rawresult.txt
           path: results/
       - name: Extract kmer11 time from result
         id: kmer11
         run: |
           ls -la results/
-          echo "TIME=$(cat results/kmer_11_${{ env.lang }}.rawresult.txt | sed -e '/.* - took .*/!d' | sed -r 's/Number of generated k-mers: .* - took (.*)/\1/g')" >> $GITHUB_OUTPUT
+          echo "TIME=$(sh render_table.sh 11 ${{ env.lang }})" >> $GITHUB_OUTPUT
       - name: Extract kmer12 time from result
         id: kmer12
         run: |
-          echo "TIME=$(cat results/kmer_12_${{ env.lang }}.rawresult.txt | sed -e '/.* - took .*/!d' | sed -r 's/Number of generated k-mers: .* - took (.*)/\1/g')" >> $GITHUB_OUTPUT
+          echo "TIME=$(sh render_table.sh 12 ${{ env.lang }})" >> $GITHUB_OUTPUT
       - name: Extract kmer13 time from result
         id: kmer13
         run: |
-          echo "TIME=$(cat results/kmer_13_${{ env.lang }}.rawresult.txt | sed -e '/.* - took .*/!d' | sed -r 's/Number of generated k-mers: .* - took (.*)/\1/g')" >> $GITHUB_OUTPUT
+          echo "TIME=$(sh render_table.sh 13 ${{ env.lang }})" >> $GITHUB_OUTPUT
       - name: Extract kmer14 time from result
         id: kmer14
         run: |
-          echo "TIME=$(cat results/kmer_14_${{ env.lang }}.rawresult.txt | sed -e '/.* - took .*/!d' | sed -r 's/Number of generated k-mers: .* - took (.*)/\1/g')" >> $GITHUB_OUTPUT
+          echo "TIME=$(sh render_table.sh 14 ${{ env.lang }})" >> $GITHUB_OUTPUT
       - name: Extract kmer15 time from result
         id: kmer15
         run: |
-          echo "TIME=$(cat results/kmer_15_${{ env.lang }}.rawresult.txt | sed -e '/.* - took .*/!d' | sed -r 's/Number of generated k-mers: .* - took (.*)/\1/g')" >> $GITHUB_OUTPUT
+          echo "TIME=$(sh render_table.sh 15 ${{ env.lang }})" >> $GITHUB_OUTPUT
       - name: Extract kmer16 time from result
         id: kmer16
         run: |
-          echo "TIME=$(cat results/kmer_16_${{ env.lang }}.rawresult.txt | sed -e '/.* - took .*/!d' | sed -r 's/Number of generated k-mers: .* - took (.*)/\1/g')" >> $GITHUB_OUTPUT
+          echo "TIME=$(sh render_table.sh 16 ${{ env.lang }})" >> $GITHUB_OUTPUT
       - name: Extract kmer17 time from result
         id: kmer17
         run: |
-          echo "TIME=$(cat results/kmer_17_${{ env.lang }}.rawresult.txt | sed -e '/.* - took .*/!d' | sed -r 's/Number of generated k-mers: .* - took (.*)/\1/g')" >> $GITHUB_OUTPUT
+          echo "TIME=$(sh render_table.sh 17 ${{ env.lang }})" >> $GITHUB_OUTPUT
       - name: Build Table
         run: |
           echo "" > $GITHUB_STEP_SUMMARY
