@@ -1,6 +1,6 @@
 Example config:
 
-Replace <lang> with the folder name of the language and <display> with the Display name.
+Replace \<lang\> with the folder name of the language and \<display\> with the Display name.
 
 speed-test-\<lang\>.yml
 ```yml
