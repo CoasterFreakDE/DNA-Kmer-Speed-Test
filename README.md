@@ -52,7 +52,7 @@ Note that the results are not 100% accurate, because the test is run on a shared
 |----------|---------|---------|---------|---------|---------|---------|---------|------------------------------|
 | C | 3ms | 12ms | 45ms | 181ms | 753ms | 2.887s | 12.926s | Win11 / i9-12900KF |
 | C++ | 3ms | 11ms | 55ms | 309ms | 1.062s | 4.149s | 15.784s | Win11 / i9-12900KF |
-| Rust | 12ms | 50ms | 202ms | 805ms | 3.322s | 14.338s | 54.414s | Win11 / i9-12900KF |
+| Rust | 5ms | 23ms | 94ms | 365ms | 1.195s | 4.499s | 17.949s | Win11 / i9-12900KF |
 | Go | 13ms | 53ms | 213ms | 835ms | 3.553s | 12.429s | 49.861s | Win11 / i9-12900KF |
 | Java | 17ms | 50ms | 158ms | 599ms | 2.703s | / | / | Win11 / i9-12900KF |
 | JavaScript | 58ms | 225ms | 894ms | 3.467s | 14.543s | / | / | Win11 / i9-12900KF |
@@ -167,13 +167,13 @@ Note that the results are not 100% accurate, because the test is run on a shared
 
 | Kmer | Duration | (Optional) Runtime Env / OS |
 |------|----------|-----------------------------|
-| 11 | 0.012s | Win11 / i9-12900KF |
-| 12 | 0.050s | Win11 / i9-12900KF |
-| 13 | 0.202s | Win11 / i9-12900KF |
-| 14 | 0.805s | Win11 / i9-12900KF |
-| 15 | 3.322s | Win11 / i9-12900KF |
-| 16 | 14.338s | Win11 / i9-12900KF |
-| 17 | 54.414s | Win11 / i9-12900KF |
+| 11 | 0.005s | Win11 / i9-12900KF |
+| 12 | 0.023s | Win11 / i9-12900KF |
+| 13 | 0.094s | Win11 / i9-12900KF |
+| 14 | 0.365s | Win11 / i9-12900KF |
+| 15 | 1.195s | Win11 / i9-12900KF |
+| 16 | 4.499s | Win11 / i9-12900KF |
+| 17 | 17.949s | Win11 / i9-12900KF |
 
 
 ### php
