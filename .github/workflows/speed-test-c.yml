@@ -25,10 +25,55 @@ jobs:
     - name: Create Result dir
       run: mkdir results
     - name: Run Tests
-      run: echo "$(make LENGTH=${{ matrix.kmer }} LANGUAGES="${{ matrix.lang }}" -s)" > results/kmer_${{ matrix.kmer }}_${{ matrix.lang }}.result.txt
+      run: echo "$(make LENGTH=${{ matrix.kmer }} LANGUAGES="${{ matrix.lang }}" -s)" > results/kmer_${{ matrix.kmer }}_${{ matrix.lang }}.rawresult.txt
       id: test
     - name: Save result for kmer ${{ matrix.kmer }} ${{ matrix.lang }}
       uses: actions/upload-artifact@master
       with:
-        name: kmer_${{ matrix.kmer }}_${{ matrix.lang }}.result.txt
-        path: results/kmer_${{ matrix.kmer }}_${{ matrix.lang }}.result.txt
+        name: kmer_${{ matrix.kmer }}_${{ matrix.lang }}.rawresult.txt
+        path: results/kmer_${{ matrix.kmer }}_${{ matrix.lang }}.rawresult.txt
+
+  result:
+    needs: [ "kmer" ]
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Extract kmer11 time from result
+        run: echo "##[set-output name=time;]$(cat results/kmer_11_c.rawresult.txt | sed -e '/.* - took .*/!d' | sed -r 's/Number of generated k-mers: .* - took (.*)/\1/g')"
+        id: kmer11
+      - name: Extract kmer12 time from result
+        run: echo "##[set-output name=time;]$(cat results/kmer_12_c.rawresult.txt | sed -e '/.* - took .*/!d' | sed -r 's/Number of generated k-mers: .* - took (.*)/\1/g')"
+        id: kmer12
+      - name: Extract kmer13 time from result
+        run: echo "##[set-output name=time;]$(cat results/kmer_13_c.rawresult.txt | sed -e '/.* - took .*/!d' | sed -r 's/Number of generated k-mers: .* - took (.*)/\1/g')"
+        id: kmer13
+      - name: Extract kmer14 time from result
+        run: echo "##[set-output name=time;]$(cat results/kmer_14_c.rawresult.txt | sed -e '/.* - took .*/!d' | sed -r 's/Number of generated k-mers: .* - took (.*)/\1/g')"
+        id: kmer14
+      - name: Extract kmer15 time from result
+        run: echo "##[set-output name=time;]$(cat results/kmer_15_c.rawresult.txt | sed -e '/.* - took .*/!d' | sed -r 's/Number of generated k-mers: .* - took (.*)/\1/g')"
+        id: kmer15
+      - name: Extract kmer16 time from result
+        run: echo "##[set-output name=time;]$(cat results/kmer_16_c.rawresult.txt | sed -e '/.* - took .*/!d' | sed -r 's/Number of generated k-mers: .* - took (.*)/\1/g')"
+        id: kmer16
+      - name: Extract kmer17 time from result
+        run: echo "##[set-output name=time;]$(cat results/kmer_17_c.rawresult.txt | sed -e '/.* - took .*/!d' | sed -r 's/Number of generated k-mers: .* - took (.*)/\1/g')"
+        id: kmer17
+      - name: Build Table
+        run: |
+          echo "" > results/kmer_${{ matrix.lang }}.md
+          echo "### C" > results/kmer_${{ matrix.lang }}.md
+          echo "" > results/kmer_${{ matrix.lang }}.md
+          echo "| Kmer | Duration | (Optional) Runtime Env / OS |" >> results/kmer_${{ matrix.lang }}.md
+          echo "|------|----------|-----------------------------|" >> results/kmer_${{ matrix.lang }}.md
+          echo "| 11 | ${{ steps.kmer11.outputs.time }} | GitHub Actions / ubuntu-latest |" >> results/kmer_${{ matrix.lang }}.md
+          echo "| 12 | ${{ steps.kmer12.outputs.time }} | GitHub Actions / ubuntu-latest |" >> results/kmer_${{ matrix.lang }}.md
+          echo "| 13 | ${{ steps.kmer13.outputs.time }} | GitHub Actions / ubuntu-latest |" >> results/kmer_${{ matrix.lang }}.md
+          echo "| 14 | ${{ steps.kmer14.outputs.time }} | GitHub Actions / ubuntu-latest |" >> results/kmer_${{ matrix.lang }}.md
+          echo "| 15 | ${{ steps.kmer15.outputs.time }} | GitHub Actions / ubuntu-latest |" >> results/kmer_${{ matrix.lang }}.md
+          echo "| 16 | ${{ steps.kmer16.outputs.time }} | GitHub Actions / ubuntu-latest |" >> results/kmer_${{ matrix.lang }}.md
+          echo "| 17 | ${{ steps.kmer17.outputs.time }} | GitHub Actions / ubuntu-latest |" >> results/kmer_${{ matrix.lang }}.md
+      - name: Create Pull Request with Results
+        uses: peter-evans/create-pull-request@v4
+        with:
+          add-paths: results/kmer_${{ matrix.lang }}.md
