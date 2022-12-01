@@ -1,4 +1,4 @@
-CFLAGS=-Wall -O3
+CFLAGS=-Wall -O3 -w
 CC=gcc
 
 # build with make LENGTH=yourNumber
