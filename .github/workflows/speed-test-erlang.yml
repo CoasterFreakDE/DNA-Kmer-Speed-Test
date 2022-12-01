@@ -1,22 +1,24 @@
 name: Kmer Speed Test [Erlang]
 
+env:
+  display: "Erlang"
+  lang: "erlang"
+
 on:
   workflow_dispatch:
   push:
     branches: [ "main" ]
     paths: 
-    - "erlang"
+    - "erlang/**"
   pull_request:
     branches: [ "main" ]
     paths: 
-    - "erlang"
+    - "erlang/**"
 
 jobs:
   kmer:
     strategy:
       matrix:
-        lang: 
-        - "erlang"
         kmer: [11, 12, 13, 14, 15, 16, 17]
     runs-on: ubuntu-latest
 
@@ -25,10 +27,65 @@ jobs:
     - name: Create Result dir
       run: mkdir results
     - name: Run Tests
-      run: echo "$(make LENGTH=${{ matrix.kmer }} LANGUAGES="${{ matrix.lang }}" -s)" > results/kmer_${{ matrix.kmer }}_${{ matrix.lang }}.result.txt
-      id: test
-    - name: Save result for kmer ${{ matrix.kmer }} ${{ matrix.lang }}
+      run: echo "$(make LENGTH=${{ matrix.kmer }} LANGUAGES="${{ env.lang }}" -s)" > results/kmer_${{ matrix.kmer }}_${{ env.lang }}.rawresult.txt
+    - name: Save result for kmer ${{ matrix.kmer }} ${{ env.lang }}
       uses: actions/upload-artifact@master
       with:
-        name: kmer_${{ matrix.kmer }}_${{ matrix.lang }}.result.txt
-        path: results/kmer_${{ matrix.kmer }}_${{ matrix.lang }}.result.txt
+        name: ${{ matrix.kmer }}_${{ env.lang }}
+        path: results/kmer_${{ matrix.kmer }}_${{ env.lang }}.rawresult.txt
+
+  result:
+    needs: [ "kmer" ]
+    runs-on: ubuntu-22.04
+    
+    steps:
+      - uses: actions/checkout@v3
+      - name: Create Result dir
+        run: mkdir results
+      - name: Download raw results
+        uses: actions/download-artifact@v3
+        with:
+          path: results/
+      - name: Extract kmer11 time from result
+        id: kmer11
+        run: |
+          ls -la results/
+          echo "TIME=$(sh extract_data.sh 11 ${{ env.lang }})" >> $GITHUB_OUTPUT
+      - name: Extract kmer12 time from result
+        id: kmer12
+        run: |
+          echo "TIME=$(sh extract_data.sh 12 ${{ env.lang }})" >> $GITHUB_OUTPUT
+      - name: Extract kmer13 time from result
+        id: kmer13
+        run: |
+          echo "TIME=$(sh extract_data.sh 13 ${{ env.lang }})" >> $GITHUB_OUTPUT
+      - name: Extract kmer14 time from result
+        id: kmer14
+        run: |
+          echo "TIME=$(sh extract_data.sh 14 ${{ env.lang }})" >> $GITHUB_OUTPUT
+      - name: Extract kmer15 time from result
+        id: kmer15
+        run: |
+          echo "TIME=$(sh extract_data.sh 15 ${{ env.lang }})" >> $GITHUB_OUTPUT
+      - name: Extract kmer16 time from result
+        id: kmer16
+        run: |
+          echo "TIME=$(sh extract_data.sh 16 ${{ env.lang }})" >> $GITHUB_OUTPUT
+      - name: Extract kmer17 time from result
+        id: kmer17
+        run: |
+          echo "TIME=$(sh extract_data.sh 17 ${{ env.lang }})" >> $GITHUB_OUTPUT
+      - name: Build Table
+        run: |
+          echo "" > $GITHUB_STEP_SUMMARY
+          echo "### ${{ env.display }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Kmer | Duration | (Optional) Runtime Env / OS |" >> $GITHUB_STEP_SUMMARY
+          echo "|------|----------|-----------------------------|" >> $GITHUB_STEP_SUMMARY
+          echo "| 11 | ${{ steps.kmer11.outputs.TIME }} | GitHub Actions / ubuntu-latest |" >> $GITHUB_STEP_SUMMARY
+          echo "| 12 | ${{ steps.kmer12.outputs.TIME }} | GitHub Actions / ubuntu-latest |" >> $GITHUB_STEP_SUMMARY
+          echo "| 13 | ${{ steps.kmer13.outputs.TIME }} | GitHub Actions / ubuntu-latest |" >> $GITHUB_STEP_SUMMARY
+          echo "| 14 | ${{ steps.kmer14.outputs.TIME }} | GitHub Actions / ubuntu-latest |" >> $GITHUB_STEP_SUMMARY
+          echo "| 15 | ${{ steps.kmer15.outputs.TIME }} | GitHub Actions / ubuntu-latest |" >> $GITHUB_STEP_SUMMARY
+          echo "| 16 | ${{ steps.kmer16.outputs.TIME }} | GitHub Actions / ubuntu-latest |" >> $GITHUB_STEP_SUMMARY
+          echo "| 17 | ${{ steps.kmer17.outputs.TIME }} | GitHub Actions / ubuntu-latest |" >> $GITHUB_STEP_SUMMARY
