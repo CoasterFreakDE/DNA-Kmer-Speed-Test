@@ -46,6 +46,8 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           path: results/
+      - name: Install sd
+        run: apt install sd -y
       - name: Extract kmer11 time from result
         id: kmer11
         run: |
