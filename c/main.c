@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-// CI-Test
+
 // Thankfully stolen:
 // https://gist.github.com/nickolayl/f6651e978db145141faa1d986182014f
 #if defined(__linux)
