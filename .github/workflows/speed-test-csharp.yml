@@ -1,0 +1,34 @@
+name: Kmer Speed Test [C#]
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+    paths: 
+    - "csharp"
+  pull_request:
+    branches: [ "main" ]
+    paths: 
+    - "csharp"
+
+jobs:
+  kmer:
+    strategy:
+      matrix:
+        lang: 
+        - "csharp"
+        kmer: [11, 12, 13, 14, 15, 16, 17]
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Create Result dir
+      run: mkdir results
+    - name: Run Tests
+      run: echo "$(make LENGTH=${{ matrix.kmer }} LANGUAGES="${{ matrix.lang }}" -s)" > results/kmer_${{ matrix.kmer }}_${{ matrix.lang }}.result.txt
+      id: test
+    - name: Save result for kmer ${{ matrix.kmer }} ${{ matrix.lang }}
+      uses: actions/upload-artifact@master
+      with:
+        name: kmer_${{ matrix.kmer }}_${{ matrix.lang }}.result.txt
+        path: results/kmer_${{ matrix.kmer }}_${{ matrix.lang }}.result.txt
