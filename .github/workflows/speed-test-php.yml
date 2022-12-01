@@ -1,0 +1,38 @@
+name: Kmer Speed Test [PHP]
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+    paths: 
+    - "php"
+  pull_request:
+    branches: [ "main" ]
+    paths: 
+    - "php"
+
+jobs:
+  kmer:
+    strategy:
+      matrix:
+        lang: 
+        - "php"
+        kmer: [11, 12, 13, 14, 15, 16, 17]
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup PHP with PECL extension
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.1'
+    - name: Create Result dir
+      run: mkdir results
+    - name: Run Tests
+      run: echo "$(make LENGTH=${{ matrix.kmer }} LANGUAGES="${{ matrix.lang }}" -s)" > results/kmer_${{ matrix.kmer }}_${{ matrix.lang }}.result.txt
+      id: test
+    - name: Save result for kmer ${{ matrix.kmer }} ${{ matrix.lang }}
+      uses: actions/upload-artifact@master
+      with:
+        name: kmer_${{ matrix.kmer }}_${{ matrix.lang }}.result.txt
+        path: results/kmer_${{ matrix.kmer }}_${{ matrix.lang }}.result.txt
