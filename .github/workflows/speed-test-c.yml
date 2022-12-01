@@ -1,19 +1,22 @@
-name: Kmer Speed Test
+name: Kmer Speed Test [C]
 
 on:
   workflow_dispatch:
   push:
     branches: [ "main" ]
-    paths: [ "c", "cpp" ]
+    paths: 
+    - "c"
   pull_request:
     branches: [ "main" ]
-    paths: [ "c", "cpp" ]
+    paths: 
+    - "c"
 
 jobs:
   kmer:
     strategy:
       matrix:
-        lang: ["c", "cpp"]
+        lang: 
+        - "c"
         kmer: [11, 12, 13, 14, 15, 16, 17]
     runs-on: ubuntu-latest
 
