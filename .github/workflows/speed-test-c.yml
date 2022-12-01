@@ -99,11 +99,11 @@ jobs:
           echo "kmer17=$(cat results/kmer_17_${{ env.lang }}.rawresult.txt | sed -e '/.* - took .*/!d' | sed -r 's/Number of generated k-mers: .* - took (.*)/\1/g')" >> $GITHUB_ENV
       - name: Build Table
         run: |
-          echo "" > results/kmer_${{ env.lang }}.md
-          echo "### C" > results/kmer_${{ env.lang }}.md
-          echo "" > results/kmer_${{ env.lang }}.md
-          echo "| Kmer | Duration | (Optional) Runtime Env / OS |" >> results/kmer_${{ env.lang }}.md
-          echo "|------|----------|-----------------------------|" >> results/kmer_${{ env.lang }}.md
+          echo "" > $GITHUB_STEP_SUMMARY
+          echo "### C" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Kmer | Duration | (Optional) Runtime Env / OS |" >> $GITHUB_STEP_SUMMARY
+          echo "|------|----------|-----------------------------|" >> $GITHUB_STEP_SUMMARY
           echo "| 11 | ${{ env.kmer11 }} | GitHub Actions / ubuntu-latest |" >> $GITHUB_STEP_SUMMARY
           echo "| 12 | ${{ env.kmer12 }} | GitHub Actions / ubuntu-latest |" >> $GITHUB_STEP_SUMMARY
           echo "| 13 | ${{ env.kmer13 }} | GitHub Actions / ubuntu-latest |" >> $GITHUB_STEP_SUMMARY
