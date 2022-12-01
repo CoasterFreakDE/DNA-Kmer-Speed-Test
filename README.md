@@ -15,6 +15,15 @@ In order to understand the background of this test, visit the original article h
 3. Run `make LENGTH=11 -s` to run the test with kmer length 11
 4. Or use `make LENGTH=13 LANGUAGES="go c cpp rust" -s` to run the test with kmer length 13 and only for the languages go, c, cpp and rust
 
+### Or run the test with docker
+
+1. Clone the repository
+2. Install docker
+3. Build a docker image using `docker build -t kmers .`
+4. Run and connect to the container with `docker run --rm -it kmers`
+5. Start the test with `./generate.sh 1 10 >> data.txt`
+6. Read the results with `cat data.txt`
+
 
 ### Kmer - Operation Amount
 
