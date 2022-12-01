@@ -26,7 +26,7 @@ jobs:
     - name: Create Result dir
       run: mkdir results
     - name: Run Tests
-      run: echo "$(make LENGTH=${{ matrix.kmer }} LANGUAGES="${{ matrix.lang }}" -s)" > results/kmer_${{ matrix.kmer }}_${{ env.lang }}.rawresult.txt
+      run: echo "$(make LENGTH=${{ matrix.kmer }} LANGUAGES="${{ env.lang }}" -s)" > results/kmer_${{ matrix.kmer }}_${{ env.lang }}.rawresult.txt
       id: test
     - name: Save result for kmer ${{ matrix.kmer }} ${{ env.lang }}
       uses: actions/upload-artifact@master
