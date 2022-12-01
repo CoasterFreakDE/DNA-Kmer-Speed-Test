@@ -4,16 +4,16 @@ on:
   workflow_dispatch:
   push:
     branches: [ "main" ]
-    paths: [ "c" ]
+    paths: [ "c", "cpp" ]
   pull_request:
     branches: [ "main" ]
-    paths: [ "c" ]
+    paths: [ "c", "cpp" ]
 
 jobs:
   kmer:
     strategy:
       matrix:
-        lang: ["c"]
+        lang: ["c", "cpp"]
         kmer: [11, 12, 13, 14, 15, 16, 17]
     runs-on: ubuntu-latest
 
@@ -22,7 +22,7 @@ jobs:
     - name: Create Result dir
       run: mkdir results
     - name: Run Tests
-      run: echo "##[set-output name=kmer_${{ matrix.kmer }};]$(make LENGTH=${{ matrix.kmer }} LANGUAGES="${{ matrix.lang }}" -s)" > results/kmer_${{ matrix.kmer }}_${{ matrix.lang }}.result.txt
+      run: echo "$(make LENGTH=${{ matrix.kmer }} LANGUAGES="${{ matrix.lang }}" -s)" > results/kmer_${{ matrix.kmer }}_${{ matrix.lang }}.result.txt
       id: test
     - name: Save result for kmer ${{ matrix.kmer }} ${{ matrix.lang }}
       uses: actions/upload-artifact@master
