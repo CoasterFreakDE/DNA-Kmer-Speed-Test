@@ -1,24 +1,31 @@
-name: Kmer Speed Test [C]
+name: Kmer Speed Test
 
 on:
   workflow_dispatch:
   push:
     branches: [ "main" ]
-    paths:
-      - 'c'
+    paths: [ "c" ]
   pull_request:
     branches: [ "main" ]
-    paths:
-      - 'c'
+    paths: [ "c" ]
 
 jobs:
-  test:
+  kmer:
     strategy:
       matrix:
+        lang: ["c"]
         kmer: [11, 12, 13, 14, 15, 16, 17]
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
+    - name: Create Result dir
+      run: mkdir results
     - name: Run Tests
-      run: make LENGTH=${{ matrix.kmer }} LANGUAGES="c" -s
+      run: echo "##[set-output name=kmer_${{ matrix.kmer }};]$(make LENGTH=${{ matrix.kmer }} LANGUAGES="${{ matrix.lang }}" -s)" > results/kmer_${{ matrix.kmer }}_${{ matrix.lang }}.result.txt
+      id: test
+    - name: Save result for kmer ${{ matrix.kmer }} ${{ matrix.lang }}
+      uses: actions/upload-artifact@master
+      with:
+        name: kmer_${{ matrix.kmer }}_${{ matrix.lang }}.result.txt
+        path: results/kmer_${{ matrix.kmer }}_${{ matrix.lang }}.result.txt
