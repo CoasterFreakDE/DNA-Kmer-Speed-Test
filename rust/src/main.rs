@@ -45,7 +45,6 @@ const KMER_LENGHT: usize = if cfg!(feature = "1kmers") {
 fn main() {
     // get current nano time
     let start = Instant::now();
-
     let counter = new_run();
 
     let duration = start.elapsed();
@@ -61,7 +60,6 @@ fn new_run() -> i128 {
     let mut counter: i128 = 1;
     while !is_done(&chars) {
         counter += 1;
-        //println!("Begin {} End {}", chars[0], chars[KMER_LENGHT - 1]);
         for i in 0..KMER_LENGHT {
             let c = chars[i];
             chars[i] = convert(c);
