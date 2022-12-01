@@ -55,5 +55,5 @@ int main()
   }
   auto t2 = Clock::now();
   auto delta = ((t2 - t1).count() / 1000) / 1000;
-  std::cout << "Nummer of generated k-mers: " << counter << " - took " << delta << "ms" << std::endl;
+  std::cout << "Number of generated k-mers: " << counter << " - took " << delta << "ms" << std::endl;
 }
