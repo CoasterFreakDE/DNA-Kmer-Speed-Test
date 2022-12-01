@@ -31,7 +31,7 @@ jobs:
     - name: Save result for kmer ${{ matrix.kmer }} ${{ env.lang }}
       uses: actions/upload-artifact@master
       with:
-        name: kmer_${{ matrix.kmer }}_${{ env.lang }}.rawresult.txt
+        name: ${{ matrix.kmer }}_${{ env.lang }}
         path: results/kmer_${{ matrix.kmer }}_${{ env.lang }}.rawresult.txt
 
   result:
@@ -50,31 +50,31 @@ jobs:
         id: kmer11
         run: |
           ls -la results/
-          echo "TIME=$(sh render_table.sh 11 ${{ env.lang }})" >> $GITHUB_OUTPUT
+          echo "TIME=$(sh extract_data.sh 11 ${{ env.lang }})" >> $GITHUB_OUTPUT
       - name: Extract kmer12 time from result
         id: kmer12
         run: |
-          echo "TIME=$(sh render_table.sh 12 ${{ env.lang }})" >> $GITHUB_OUTPUT
+          echo "TIME=$(sh extract_data.sh 12 ${{ env.lang }})" >> $GITHUB_OUTPUT
       - name: Extract kmer13 time from result
         id: kmer13
         run: |
-          echo "TIME=$(sh render_table.sh 13 ${{ env.lang }})" >> $GITHUB_OUTPUT
+          echo "TIME=$(sh extract_data.sh 13 ${{ env.lang }})" >> $GITHUB_OUTPUT
       - name: Extract kmer14 time from result
         id: kmer14
         run: |
-          echo "TIME=$(sh render_table.sh 14 ${{ env.lang }})" >> $GITHUB_OUTPUT
+          echo "TIME=$(sh extract_data.sh 14 ${{ env.lang }})" >> $GITHUB_OUTPUT
       - name: Extract kmer15 time from result
         id: kmer15
         run: |
-          echo "TIME=$(sh render_table.sh 15 ${{ env.lang }})" >> $GITHUB_OUTPUT
+          echo "TIME=$(sh extract_data.sh 15 ${{ env.lang }})" >> $GITHUB_OUTPUT
       - name: Extract kmer16 time from result
         id: kmer16
         run: |
-          echo "TIME=$(sh render_table.sh 16 ${{ env.lang }})" >> $GITHUB_OUTPUT
+          echo "TIME=$(sh extract_data.sh 16 ${{ env.lang }})" >> $GITHUB_OUTPUT
       - name: Extract kmer17 time from result
         id: kmer17
         run: |
-          echo "TIME=$(sh render_table.sh 17 ${{ env.lang }})" >> $GITHUB_OUTPUT
+          echo "TIME=$(sh extract_data.sh 17 ${{ env.lang }})" >> $GITHUB_OUTPUT
       - name: Build Table
         run: |
           echo "" > $GITHUB_STEP_SUMMARY
