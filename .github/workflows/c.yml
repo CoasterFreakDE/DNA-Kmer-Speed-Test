@@ -1,0 +1,24 @@
+name: Kmer Speed Test [C]
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'c'
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - 'c'
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        kmer: [11, 12, 13, 14, 15, 16, 17]
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Run Tests
+      run: make LENGTH=${{ matrix.kmer }} LANGUAGES="c" -s
