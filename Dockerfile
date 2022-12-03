@@ -2,7 +2,7 @@
 # use a native linux machine + Docker for better results
 
 FROM alpine:3.17
-RUN apk add gcc g++ make erlang rust cargo cabal wget nodejs npm bash perl go openjdk17
+RUN apk add gcc g++ make erlang rust cargo cabal wget nodejs npm bash perl go openjdk17 luajit
 
 RUN cabal update
 
