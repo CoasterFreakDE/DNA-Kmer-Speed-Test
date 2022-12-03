@@ -36,4 +36,4 @@ while not table_equals(start, stop) do
     end
 end
 
-print(string.format("Number of generated k-mers: %d - took: %dms", counter, os.clock() * 1000))
+print(string.format("Number of generated k-mers: %d - took %dms", counter, os.clock() * 1000))
