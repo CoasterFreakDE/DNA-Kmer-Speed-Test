@@ -24,7 +24,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - uses: xpol/setup-lua@v0.3
+    - name: Install luajit
+      run: sudo apt install luajit -y
     - name: Create Result dir
       run: mkdir results
     - name: Run Tests
