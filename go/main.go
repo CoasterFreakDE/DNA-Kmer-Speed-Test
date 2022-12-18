@@ -24,7 +24,6 @@ func convert(c byte) byte {
 
 func main() {
 	// Parse the length argument as a uint64 to avoid using strconv.Atoi
-	const argument = 15
 	length, err := strconv.ParseUint(os.Args[1], 10, 64)
 	if err != nil {
 		panic(err)
