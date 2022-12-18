@@ -23,31 +23,34 @@ func convert(c byte) byte {
 }
 
 func main() {
-	length, err := strconv.Atoi(os.Args[1])
+	// Parse the length argument as a uint64 to avoid using strconv.Atoi
+	const argument = 15
+	length, err := strconv.ParseUint(os.Args[1], 10, 64)
 	if err != nil {
 		panic(err)
 	}
+
+	// Create the initial and final slices using make and the correct capacity
+	s := make([]byte, length)
+	sLast := make([]byte, length)
+
+	// Initialize the slices using a loop
+	for i := range s {
+		s[i] = 'A'
+	}
+	for i := range sLast {
+		sLast[i] = 'T'
+	}
+
 	start := time.Now()
-	base := "ACGT"
-	end := base[len(base) - 1]
-	s := ""
-	for i := 0; i < length; i++ {
-		s += string(base[0])
-	}
-	sLast := ""
-	for i := 0; i < length; i++ {
-		sLast += string(end)
-	}
-	ss := []byte(s)
-	ssLast := []byte(sLast)
 	counter := uint64(1)
-	for !bytes.Equal(ss, ssLast) {
+	for !bytes.Equal(s, sLast) {
 		counter++
-		// fmt.Println(string(ss))
-		for i := 0; i < length; i++ {
-			old := ss[i]
-			ss[i] = convert(old)
-			if old != end {
+		// fmt.Println(string(s))
+		for i := 0; i < len(s); i++ {
+			old := s[i]
+			s[i] = convert(old)
+			if old != 'T' {
 				break
 			}
 		}
