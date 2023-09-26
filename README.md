@@ -57,6 +57,7 @@ Note that the results are not 100% accurate, because the test is run on a shared
 | Java | 17ms | 50ms | 158ms | 599ms | 2.703s | / | / | Win11 / i9-12900KF |
 | JavaScript | 58ms | 225ms | 894ms | 3.467s | 14.543s | / | / | Win11 / i9-12900KF |
 | C# | 98ms | 333ms | 1.207s | 4.588s | 18.205s | 72.196s | 265.764s | Win11 / i9-12900KF |
+| Mojo | 319ms | 1.289s | 5.090s | 20.944s | 83.584s | / | / | Win11 / i9-12900KF (WSL Ubuntu) |
 | Erlang | 375ms | 1.607s | 6.397s | 25.117s | 105.529s | / | / | Win11 / i9-12900KF |
 | php | 561ms | 2.164s | 8.892s | 35.038s | 140.391s | / | / | Win11 / i9-12900KF |
 | Perl | 643ms | 2.568s | 10.182s | 41.137s | 169.598s | / | / | Win11 / i9-12900KF |
@@ -162,6 +163,16 @@ Note that the results are not 100% accurate, because the test is run on a shared
 | 13 | 35.374s | Win11 / i9-12900KF |
 | 14 | 99.665s | Win11 / i9-12900KF |
 | 15 | 414.169s | Win11 / i9-12900KF |
+
+### Mojo
+
+| Kmer | Duration | (Optional) Runtime Env / OS |
+|------|----------|-----------------------------|
+| 11 | 319ms | Win11 / i9-12900KF (WSL Ubuntu) |
+| 12 | 1.289s | Win11 / i9-12900KF (WSL Ubuntu) |
+| 13 | 5.090s | Win11 / i9-12900KF (WSL Ubuntu) |
+| 14 | 20.944s | Win11 / i9-12900KF (WSL Ubuntu) |
+| 15 | 83.584s | Win11 / i9-12900KF (WSL Ubuntu) |
 
 ### Rust
 
