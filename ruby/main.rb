@@ -49,5 +49,5 @@ until array_equals(ss, ss_last)
   end
 end
 
-time_elapsed = Time.now - time_start
-puts "Number of generated k-mers: #{counter} - took #{time_elapsed}ms"
+time_elapsed_ms = (Time.now - time_start) * 1000.0
+puts "Number of generated k-mers: #{counter} - took #{time_elapsed_ms}ms"

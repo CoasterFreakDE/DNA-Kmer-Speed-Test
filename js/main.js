@@ -16,7 +16,7 @@ const convert = c => {
   return " ";
 };
 
-const lenStr = parseInt(process.argv[2]);
+const lenStr = Number.parseInt(process.argv[2], 10);
 const timeStart = performance.now();
 
 const opt = "ACGT";

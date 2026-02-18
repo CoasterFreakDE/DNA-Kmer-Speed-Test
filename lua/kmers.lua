@@ -8,6 +8,7 @@ for i = 1, n do
     stop[i] = "T"
 end
 local counter = 1
+local time_start = os.clock()
 local convert = {
     A = "C",
     C = "G",
@@ -36,4 +37,5 @@ while not table_equals(start, stop) do
     end
 end
 
-print(string.format("Number of generated k-mers: %d - took %dms", counter, os.clock() * 1000))
+local elapsed_ms = (os.clock() - time_start) * 1000
+print(string.format("Number of generated k-mers: %d - took %.3fms", counter, elapsed_ms))

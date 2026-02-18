@@ -11,7 +11,7 @@ convert = (c) ->
     return "A"
   return " "
 
-lenStr = parseInt process.argv[2]
+lenStr = parseInt process.argv[2], 10
 timeStart = performance.now()
 
 opt = "ACGT"

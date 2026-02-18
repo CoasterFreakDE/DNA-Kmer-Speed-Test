@@ -13,6 +13,13 @@ In order to understand the background of this test, visit the original article h
 3. Run `make LENGTH=11 -s` to run the test with kmer length 11
 4. Or use `make LENGTH=13 LANGUAGES="go c cpp rust" -s` to run the test with kmer length 13 and only for the languages go, c, cpp and rust
 
+### Correctness tests
+
+- Run all language correctness tests with `make test TEST_LENGTH=5`
+- Run one language correctness test with `make test-lang LANGUAGE=python TEST_LENGTH=5`
+
+The correctness tests validate that the generated k-mer count matches `4^k` and that the output format contains a duration.
+
 ### Or run the test with docker
 
 1. Clone the repository

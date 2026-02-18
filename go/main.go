@@ -55,5 +55,6 @@ func main() {
 		}
 	}
 	delta := time.Since(start)
-	fmt.Printf("Number of generated k-mers: %v - took %v\n", counter, delta)
+	deltaMs := float64(delta.Nanoseconds()) / 1e6
+	fmt.Printf("Number of generated k-mers: %v - took %.3fms\n", counter, deltaMs)
 }

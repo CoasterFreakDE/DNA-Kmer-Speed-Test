@@ -44,8 +44,8 @@ func main() {
         }
     }
 
-    let delta = Date().timeIntervalSince(start)
-    print("Number of generated k-mers: \(counter) - took \(delta) seconds")
+    let deltaMs = Date().timeIntervalSince(start) * 1000
+    print("Number of generated k-mers: \(counter) - took \(deltaMs)ms")
 }
 
 main()

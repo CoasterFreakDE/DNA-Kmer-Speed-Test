@@ -8,17 +8,20 @@ on:
       - "c/**"
       - "cpp/**"
       - "csharp/**"
+      - "coffeescript/**"
       - "erlang/**"
       - "go/**"
       - "haskell/**"
       - "java/**"
       - "js/**"
       - "lua/**"
+      - "mojo/**"
       - "perl/**"
       - "php/**"
       - "python/**"
       - "rust/**"
       - "Makefile"
+      - "scripts/**"
       - ".github/workflows/correctness-smoke.yml"
   pull_request:
     branches: ["main"]
@@ -26,17 +29,20 @@ on:
       - "c/**"
       - "cpp/**"
       - "csharp/**"
+      - "coffeescript/**"
       - "erlang/**"
       - "go/**"
       - "haskell/**"
       - "java/**"
       - "js/**"
       - "lua/**"
+      - "mojo/**"
       - "perl/**"
       - "php/**"
       - "python/**"
       - "rust/**"
       - "Makefile"
+      - "scripts/**"
       - ".github/workflows/correctness-smoke.yml"
 
 permissions:
@@ -48,33 +54,55 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        lang: [c, cpp, csharp, erlang, go, haskell, java, js, lua, perl, php, python, rust]
+        include:
+          - lang: c
+          - lang: cpp
+          - lang: csharp
+            setup_dotnet_version: "7.x"
+          - lang: coffeescript
+            setup_node_version: "20"
+            setup_command: "npm install --global coffeescript"
+          - lang: erlang
+          - lang: go
+          - lang: haskell
+          - lang: java
+          - lang: js
+            setup_node_version: "20"
+          - lang: lua
+            setup_command: "sudo apt-get update && sudo apt-get install -y luajit"
+          - lang: mojo
+            optional: true
+          - lang: perl
+          - lang: php
+          - lang: python
+          - lang: rust
+    env:
+      TEST_LENGTH: 5
     steps:
       - uses: actions/checkout@v4
-      - name: Validate output for ${{ matrix.lang }}
+
+      - name: Setup .NET
+        if: ${{ matrix.setup_dotnet_version }}
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ matrix.setup_dotnet_version }}
+
+      - name: Setup Node.js
+        if: ${{ matrix.setup_node_version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.setup_node_version }}
+
+      - name: Run custom setup
+        if: ${{ matrix.setup_command }}
         shell: bash
         run: |
           set -euo pipefail
+          ${{ matrix.setup_command }}
 
-          length=5
-          expected=$((4 ** length))
-          output="$(make LENGTH="${length}" LANGUAGES="${{ matrix.lang }}" -s)"
-          echo "$output"
-
-          count="$(echo "$output" | sed -nE 's/Number of generated k-mers: ([0-9]+).*/\1/p' | head -n 1)"
-          duration="$(echo "$output" | awk -F ' - took ' '/Number of generated k-mers:/ { print $2; exit }')"
-
-          if [[ -z "$count" ]]; then
-            echo "Could not parse generated k-mer count for ${{ matrix.lang }}" >&2
-            exit 1
-          fi
-
-          if [[ "$count" -ne "$expected" ]]; then
-            echo "Unexpected count for ${{ matrix.lang }}: got $count expected $expected" >&2
-            exit 1
-          fi
-
-          if [[ -z "$duration" ]]; then
-            echo "Could not parse duration for ${{ matrix.lang }}" >&2
-            exit 1
-          fi
+      - name: Validate output for ${{ matrix.lang }}
+        continue-on-error: ${{ matrix.optional == true }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          bash scripts/test_language.sh "${{ matrix.lang }}" "${TEST_LENGTH}"

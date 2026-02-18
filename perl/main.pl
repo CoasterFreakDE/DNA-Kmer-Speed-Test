@@ -18,7 +18,7 @@ my $last_char = $opt[-1];
 my $counter = 1;
 while ($s ne $s_last) {
     $counter += 1;
-    for my $idx (0 .. $len_str) {
+    for my $idx (0 .. $len_str - 1) {
         my $char = substr $s, $idx, 1;
         substr $s, $idx, 1, $map{$char};
         last if $char ne $last_char;
