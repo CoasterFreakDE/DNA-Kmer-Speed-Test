@@ -22,6 +22,8 @@ permissions:
 jobs:
   build-report:
     runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
     steps:
       - name: Resolve workflow run id
         id: run_id

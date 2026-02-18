@@ -21,6 +21,14 @@ on:
         required: false
         type: string
         default: ""
+      setup_haskell_ghc:
+        required: false
+        type: string
+        default: ""
+      setup_haskell_cabal:
+        required: false
+        type: string
+        default: ""
       setup_command:
         required: false
         type: string
@@ -49,6 +57,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ inputs.setup_node_version }}
+      - name: Setup Haskell
+        if: ${{ inputs.setup_haskell_ghc != '' }}
+        uses: haskell-actions/setup@v2
+        with:
+          ghc-version: ${{ inputs.setup_haskell_ghc }}
+          cabal-version: ${{ inputs.setup_haskell_cabal }}
       - name: Run custom setup
         if: ${{ inputs.setup_command != '' }}
         shell: bash

@@ -56,13 +56,17 @@ jobs:
             lang: "cpp"
           - display: "C#"
             lang: "csharp"
-            setup_dotnet_version: "7.x"
+            setup_dotnet_version: "6.x"
           - display: "Erlang"
             lang: "erlang"
+            setup_command: "sudo apt-get update && sudo apt-get install -y erlang"
           - display: "Go"
             lang: "go"
           - display: "Haskell"
             lang: "haskell"
+            setup_haskell_ghc: "9.0.2"
+            setup_haskell_cabal: "3.6.2.0"
+            setup_command: "cabal update"
           - display: "Java"
             lang: "java"
           - display: "JavaScript"
@@ -87,4 +91,6 @@ jobs:
       kmer_values: ${{ matrix.kmer_values || '[11,12,13,14,15,16,17]' }}
       setup_dotnet_version: ${{ matrix.setup_dotnet_version || '' }}
       setup_node_version: ${{ matrix.setup_node_version || '' }}
+      setup_haskell_ghc: ${{ matrix.setup_haskell_ghc || '' }}
+      setup_haskell_cabal: ${{ matrix.setup_haskell_cabal || '' }}
       setup_command: ${{ matrix.setup_command || '' }}

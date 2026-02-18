@@ -38,7 +38,7 @@ jobs:
       matrix:
         include:
           - lang: zig
-            setup_command: "sudo snap install zig --classic"
+            setup_command: "sudo snap install --beta zig --classic"
             optional: true
           - lang: nim
             setup_command: "sudo apt-get update && sudo apt-get install -y nim"
@@ -58,6 +58,7 @@ jobs:
 
       - name: Run setup
         if: ${{ matrix.setup_command }}
+        continue-on-error: ${{ matrix.optional == true }}
         shell: bash
         run: |
           set -euo pipefail
