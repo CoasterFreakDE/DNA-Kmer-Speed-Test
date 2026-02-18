@@ -23,7 +23,7 @@ pub fn main() !void {
     const len = try std.fmt.parseInt(usize, args[1], 10);
     var s = try allocator.alloc(u8, len);
     defer allocator.free(s);
-    var s_last = try allocator.alloc(u8, len);
+    const s_last = try allocator.alloc(u8, len);
     defer allocator.free(s_last);
 
     @memset(s, 'A');
