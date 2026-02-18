@@ -1,0 +1,133 @@
+name: Matrix Last Run Report
+
+on:
+  workflow_run:
+    workflows: ["Kmer Correctness Smoke Test"]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      workflow_file:
+        description: "Workflow file to inspect"
+        required: false
+        default: "correctness-smoke.yml"
+      branch:
+        description: "Branch to query for manual runs"
+        required: false
+        default: "main"
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  build-report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Resolve workflow run id
+        id: run_id
+        shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          WORKFLOW_RUN_ID: ${{ github.event.workflow_run.id }}
+          WORKFLOW_FILE: ${{ github.event.inputs.workflow_file }}
+          BRANCH: ${{ github.event.inputs.branch }}
+        run: |
+          set -euo pipefail
+
+          if [[ "$EVENT_NAME" == "workflow_run" ]]; then
+            run_id="$WORKFLOW_RUN_ID"
+          else
+            workflow_file="${WORKFLOW_FILE:-correctness-smoke.yml}"
+            branch="${BRANCH:-main}"
+            run_id="$(gh api "/repos/${GITHUB_REPOSITORY}/actions/workflows/${workflow_file}/runs" \
+              -f branch="$branch" -f status="completed" -f per_page=1 \
+              --jq '.workflow_runs[0].id')"
+          fi
+
+          if [[ -z "${run_id}" || "${run_id}" == "null" ]]; then
+            echo "Could not resolve a run id." >&2
+            exit 1
+          fi
+
+          echo "run_id=${run_id}" >> "$GITHUB_OUTPUT"
+
+      - name: Fetch run and jobs metadata
+        shell: bash
+        env:
+          RUN_ID: ${{ steps.run_id.outputs.run_id }}
+        run: |
+          set -euo pipefail
+          mkdir -p report
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/runs/${RUN_ID}" > report/run.json
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/runs/${RUN_ID}/jobs?per_page=100" > report/jobs.json
+
+      - name: Build consolidated matrix report
+        shell: bash
+        env:
+          RUN_ID: ${{ steps.run_id.outputs.run_id }}
+        run: |
+          set -euo pipefail
+
+          {
+            echo "# Matrix Results Report"
+            echo ""
+            echo "- Repository: ${GITHUB_REPOSITORY}"
+            echo "- Run ID: ${RUN_ID}"
+            echo "- Run URL: $(jq -r '.html_url' report/run.json)"
+            echo "- Workflow: $(jq -r '.name' report/run.json)"
+            echo "- Head branch: $(jq -r '.head_branch' report/run.json)"
+            echo "- Event: $(jq -r '.event' report/run.json)"
+            echo "- Conclusion: $(jq -r '.conclusion' report/run.json)"
+            echo ""
+            echo "| Language | Conclusion | Status | Job URL |"
+            echo "| --- | --- | --- | --- |"
+
+            jq -r '
+              .jobs[]
+              | select(.name | startswith("correctness ("))
+              | [
+                  (.name | sub("^correctness \\("; "") | sub(",.*$"; "") | sub("\\)$"; "")),
+                  (.conclusion // "-"),
+                  (.status // "-"),
+                  .html_url
+                ]
+              | @tsv
+            ' report/jobs.json | while IFS=$'\t' read -r lang conclusion status url; do
+              echo "| ${lang} | ${conclusion} | ${status} | [job](${url}) |"
+            done
+          } > report/matrix-results.md
+
+          jq '
+            {
+              run: {
+                id: .id,
+                name: .name,
+                html_url: .html_url,
+                head_branch: .head_branch,
+                event: .event,
+                conclusion: .conclusion
+              }
+            }
+          ' report/run.json > report/matrix-results.json
+
+          jq '
+            .jobs
+            | map(
+                select(.name | startswith("correctness ("))
+                | {
+                    language: (.name | sub("^correctness \\("; "") | sub(",.*$"; "") | sub("\\)$"; "")),
+                    name,
+                    status,
+                    conclusion,
+                    html_url
+                  }
+              )
+          ' report/jobs.json > report/matrix-jobs.json
+
+          cat report/matrix-results.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload consolidated report artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: matrix-results-run-${{ steps.run_id.outputs.run_id }}
+          path: report/

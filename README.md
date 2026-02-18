@@ -48,6 +48,22 @@ The correctness tests validate that the generated k-mer count matches `4^k` and 
 You can find the automated test results at https://github.com/CoasterFreakDE/DNA-Kmer-Speed-Test/actions
 Note that the results are not 100% accurate, because the test is run on a shared server with other processes running in the background.
 
+### Quick tutorial: where to find CI results
+
+1. Open the GitHub Actions page: https://github.com/CoasterFreakDE/DNA-Kmer-Speed-Test/actions
+2. Choose a workflow:
+   - Correctness checks: https://github.com/CoasterFreakDE/DNA-Kmer-Speed-Test/actions/workflows/correctness-smoke.yml
+   - Consolidated matrix report (last correctness run): https://github.com/CoasterFreakDE/DNA-Kmer-Speed-Test/actions/workflows/matrix-last-run-report.yml
+   - Speed tests (all workflows): https://github.com/CoasterFreakDE/DNA-Kmer-Speed-Test/actions?query=Kmer+Speed+Test
+3. Open the latest run and click the `correctness` job (or speed-test job).
+4. Open a matrix entry (for example `python`, `rust`, `java`).
+5. Read the step logs:
+   - `Validate output for <lang>` shows `PASS` / `SKIP` and parsed details for correctness tests.
+   - The speed-test workflows write a Markdown table in the run **Summary**.
+6. For one combined file with all correctness matrix entries, open the latest run of `Matrix Last Run Report` and download the artifact `matrix-results-run-<run_id>`.
+
+Tip: if you only want one language locally, run `make test-lang LANGUAGE=python TEST_LENGTH=5`.
+
 ## Comparison of the languages
 
 | Language   | Kmer 11 | Kmer 12 | Kmer 13 | Kmer 14 | Kmer 15  | Kmer 16 | Kmer 17  | (Optional) Runtime Env / OS     |
