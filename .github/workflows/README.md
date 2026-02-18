@@ -1,42 +1,31 @@
-Example config:
+Speed test workflows are now split into:
 
-Replace `<lang>` with the folder name of the language and `<display>` with the display name.
+- `speed-test.yml` (single matrix entrypoint for all languages)
+- `_speed-test-reusable.yml` (shared implementation used by the matrix)
 
-`speed-test-<lang>.yml`
+To add a new language in one place, edit the `matrix.include` list in `speed-test.yml`.
+Each item maps directly to one reusable invocation:
+
 ```yml
-name: Kmer Speed Test [<display>]
-
-on:
-  workflow_dispatch:
-  push:
-    branches: ["main"]
-    paths:
-      - "<lang>/**"
-      - "Makefile"
-      - ".github/workflows/_speed-test-reusable.yml"
-      - ".github/workflows/speed-test-<lang>.yml"
-  pull_request:
-    branches: ["main"]
-    paths:
-      - "<lang>/**"
-      - "Makefile"
-      - ".github/workflows/_speed-test-reusable.yml"
-      - ".github/workflows/speed-test-<lang>.yml"
-
-permissions:
-  contents: read
-
 jobs:
-  kmer:
+  speed-test:
+    strategy:
+      matrix:
+        include:
+          - display: "MyLang"
+            lang: "mylang"
+            kmer_values: "[11,12,13,14,15]"
+            setup_dotnet_version: ""
+            setup_node_version: ""
+            setup_command: ""
     uses: ./.github/workflows/_speed-test-reusable.yml
-    with:
-      display: "<display>"
-      lang: "<lang>"
 ```
 
-Optional inputs supported by the reusable workflow:
+Supported reusable inputs:
 
-- `kmer_values`: JSON array string, for example `"[11,12,13,14,15,16]"`.
-- `setup_dotnet_version`: .NET SDK version (for example `"7.x"`).
-- `setup_node_version`: Node.js version (for example `"19"`).
-- `setup_command`: custom shell setup command (for example installing runtime packages).
+- `display`: language display name shown in summary
+- `lang`: language folder name used in `make LANGUAGES=<lang>`
+- `kmer_values`: JSON array string, for example `"[11,12,13,14,15,16]"`
+- `setup_dotnet_version`: .NET SDK version (for example `"6.x"` or `"8.x"`)
+- `setup_node_version`: Node.js version (for example `"20"`)
+- `setup_command`: custom shell setup command for runtime/install steps

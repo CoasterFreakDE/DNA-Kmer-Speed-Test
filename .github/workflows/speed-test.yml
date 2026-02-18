@@ -1,0 +1,90 @@
+name: Kmer Speed Test
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+    paths:
+      - "c/**"
+      - "cpp/**"
+      - "csharp/**"
+      - "erlang/**"
+      - "go/**"
+      - "haskell/**"
+      - "java/**"
+      - "js/**"
+      - "lua/**"
+      - "perl/**"
+      - "php/**"
+      - "python/**"
+      - "rust/**"
+      - "Makefile"
+      - ".github/workflows/_speed-test-reusable.yml"
+      - ".github/workflows/speed-test.yml"
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "c/**"
+      - "cpp/**"
+      - "csharp/**"
+      - "erlang/**"
+      - "go/**"
+      - "haskell/**"
+      - "java/**"
+      - "js/**"
+      - "lua/**"
+      - "perl/**"
+      - "php/**"
+      - "python/**"
+      - "rust/**"
+      - "Makefile"
+      - ".github/workflows/_speed-test-reusable.yml"
+      - ".github/workflows/speed-test.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  speed-test:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - display: "C"
+            lang: "c"
+          - display: "C++"
+            lang: "cpp"
+          - display: "C#"
+            lang: "csharp"
+            setup_dotnet_version: "7.x"
+          - display: "Erlang"
+            lang: "erlang"
+          - display: "Go"
+            lang: "go"
+          - display: "Haskell"
+            lang: "haskell"
+          - display: "Java"
+            lang: "java"
+          - display: "JavaScript"
+            lang: "js"
+            setup_node_version: "19"
+          - display: "Lua"
+            lang: "lua"
+            setup_command: "sudo apt-get update && sudo apt-get install -y luajit"
+          - display: "Perl"
+            lang: "perl"
+          - display: "PHP"
+            lang: "php"
+            kmer_values: "[11,12,13,14,15,16]"
+          - display: "Python"
+            lang: "python"
+          - display: "Rust"
+            lang: "rust"
+    uses: ./.github/workflows/_speed-test-reusable.yml
+    with:
+      display: ${{ matrix.display }}
+      lang: ${{ matrix.lang }}
+      kmer_values: ${{ matrix.kmer_values || '[11,12,13,14,15,16,17]' }}
+      setup_dotnet_version: ${{ matrix.setup_dotnet_version || '' }}
+      setup_node_version: ${{ matrix.setup_node_version || '' }}
+      setup_command: ${{ matrix.setup_command || '' }}

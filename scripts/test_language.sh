@@ -16,6 +16,9 @@ required_cmd_for_lang() {
     cpp) echo "g++" ;;
     csharp) echo "dotnet" ;;
     coffeescript) echo "coffee" ;;
+    crystal) echo "crystal" ;;
+    d) echo "ldc2" ;;
+    elixir) echo "elixir" ;;
     erlang) echo "erl" ;;
     go) echo "go" ;;
     haskell) echo "cabal" ;;
@@ -23,10 +26,13 @@ required_cmd_for_lang() {
     js) echo "node" ;;
     lua) echo "luajit" ;;
     mojo) echo "mojo" ;;
+    nim) echo "nim" ;;
     perl) echo "perl" ;;
     php) echo "php" ;;
     python) echo "python" ;;
     rust) echo "cargo" ;;
+    v) echo "v" ;;
+    zig) echo "zig" ;;
     *)
       echo "Unknown language '${1}'" >&2
       exit 1

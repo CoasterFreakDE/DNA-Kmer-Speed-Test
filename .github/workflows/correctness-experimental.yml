@@ -1,0 +1,72 @@
+name: Kmer Correctness Experimental
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+    paths:
+      - "zig/**"
+      - "nim/**"
+      - "d/**"
+      - "v/**"
+      - "crystal/**"
+      - "elixir/**"
+      - "Makefile"
+      - "scripts/**"
+      - ".github/workflows/correctness-experimental.yml"
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "zig/**"
+      - "nim/**"
+      - "d/**"
+      - "v/**"
+      - "crystal/**"
+      - "elixir/**"
+      - "Makefile"
+      - "scripts/**"
+      - ".github/workflows/correctness-experimental.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  correctness-experimental:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - lang: zig
+            setup_command: "sudo snap install zig --classic"
+            optional: true
+          - lang: nim
+            setup_command: "sudo apt-get update && sudo apt-get install -y nim"
+          - lang: d
+            setup_command: "sudo apt-get update && sudo apt-get install -y ldc"
+          - lang: v
+            setup_command: "git clone --depth=1 https://github.com/vlang/v /tmp/vlang && make -C /tmp/vlang && sudo ln -sf /tmp/vlang/v /usr/local/bin/v"
+            optional: true
+          - lang: crystal
+            setup_command: "sudo apt-get update && sudo apt-get install -y crystal"
+          - lang: elixir
+            setup_command: "sudo apt-get update && sudo apt-get install -y elixir"
+    env:
+      TEST_LENGTH: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run setup
+        if: ${{ matrix.setup_command }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          ${{ matrix.setup_command }}
+
+      - name: Validate output for ${{ matrix.lang }}
+        shell: bash
+        env:
+          ALLOW_MISSING_RUNTIME: ${{ matrix.optional == true }}
+        run: |
+          set -euo pipefail
+          bash scripts/test_language.sh "${{ matrix.lang }}" "${TEST_LENGTH}"

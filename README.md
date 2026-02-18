@@ -17,8 +17,23 @@ In order to understand the background of this test, visit the original article h
 
 - Run all language correctness tests with `make test TEST_LENGTH=5`
 - Run one language correctness test with `make test-lang LANGUAGE=python TEST_LENGTH=5`
+- Run the first experimental language batch with `make experimental LENGTH=8 -s`
+- Run experimental correctness tests with `make test-experimental TEST_LENGTH=5`
 
 The correctness tests validate that the generated k-mer count matches `4^k` and that the output format contains a duration.
+
+Current experimental language batch:
+
+- `zig`
+- `nim`
+- `d`
+- `v`
+- `crystal`
+- `elixir`
+
+Experimental CI workflow:
+
+- https://github.com/CoasterFreakDE/DNA-Kmer-Speed-Test/actions/workflows/correctness-experimental.yml
 
 ### Or run the test with docker
 
