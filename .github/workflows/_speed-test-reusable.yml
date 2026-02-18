@@ -1,0 +1,111 @@
+name: Reusable Kmer Speed Test
+
+on:
+  workflow_call:
+    inputs:
+      display:
+        required: true
+        type: string
+      lang:
+        required: true
+        type: string
+      kmer_values:
+        required: false
+        type: string
+        default: "[11,12,13,14,15,16,17]"
+      setup_dotnet_version:
+        required: false
+        type: string
+        default: ""
+      setup_node_version:
+        required: false
+        type: string
+        default: ""
+      setup_command:
+        required: false
+        type: string
+        default: ""
+
+permissions:
+  contents: read
+
+jobs:
+  kmer:
+    strategy:
+      fail-fast: false
+      matrix:
+        kmer: ${{ fromJson(inputs.kmer_values) }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        if: ${{ inputs.setup_dotnet_version != '' }}
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ inputs.setup_dotnet_version }}
+      - name: Setup Node.js
+        if: ${{ inputs.setup_node_version != '' }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.setup_node_version }}
+      - name: Run custom setup
+        if: ${{ inputs.setup_command != '' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          ${{ inputs.setup_command }}
+      - name: Create result directory
+        run: mkdir -p results
+      - name: Run benchmark for k=${{ matrix.kmer }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          make LENGTH="${{ matrix.kmer }}" LANGUAGES="${{ inputs.lang }}" -s > "results/kmer_${{ matrix.kmer }}_${{ inputs.lang }}.rawresult.txt"
+      - name: Save result for k=${{ matrix.kmer }} ${{ inputs.lang }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: raw-${{ matrix.kmer }}_${{ inputs.lang }}
+          path: results/kmer_${{ matrix.kmer }}_${{ inputs.lang }}.rawresult.txt
+
+  result:
+    needs: [kmer]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download raw results
+        uses: actions/download-artifact@v4
+        with:
+          path: results/
+          pattern: raw-*
+          merge-multiple: true
+      - name: Build summary table
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "### ${{ inputs.display }}" > "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Kmer | Duration | (Optional) Runtime Env / OS |" >> "$GITHUB_STEP_SUMMARY"
+          echo "|------|----------|-----------------------------|" >> "$GITHUB_STEP_SUMMARY"
+
+          files=(results/kmer_*_${{ inputs.lang }}.rawresult.txt)
+          if [[ ! -e "${files[0]}" ]]; then
+            echo "No result files found for ${{ inputs.lang }}" >&2
+            exit 1
+          fi
+
+          mapfile -t sorted_files < <(
+            printf '%s\n' "${files[@]}" | sort -V
+          )
+
+          for file in "${sorted_files[@]}"; do
+            kmer="$(echo "$file" | sed -E 's|.*kmer_([0-9]+)_.*|\1|')"
+            duration="$(awk -F ' - took ' '/Number of generated k-mers:/ { print $2; exit }' "$file")"
+            if [[ -z "$duration" ]]; then
+              echo "Could not parse duration from $file" >&2
+              exit 1
+            fi
+
+            echo "| ${kmer} | ${duration} | GitHub Actions / ubuntu-latest |" >> "$GITHUB_STEP_SUMMARY"
+          done

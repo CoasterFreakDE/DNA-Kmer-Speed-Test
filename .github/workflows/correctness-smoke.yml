@@ -1,0 +1,80 @@
+name: Kmer Correctness Smoke Test
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+    paths:
+      - "c/**"
+      - "cpp/**"
+      - "csharp/**"
+      - "erlang/**"
+      - "go/**"
+      - "haskell/**"
+      - "java/**"
+      - "js/**"
+      - "lua/**"
+      - "perl/**"
+      - "php/**"
+      - "python/**"
+      - "rust/**"
+      - "Makefile"
+      - ".github/workflows/correctness-smoke.yml"
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "c/**"
+      - "cpp/**"
+      - "csharp/**"
+      - "erlang/**"
+      - "go/**"
+      - "haskell/**"
+      - "java/**"
+      - "js/**"
+      - "lua/**"
+      - "perl/**"
+      - "php/**"
+      - "python/**"
+      - "rust/**"
+      - "Makefile"
+      - ".github/workflows/correctness-smoke.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  correctness:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        lang: [c, cpp, csharp, erlang, go, haskell, java, js, lua, perl, php, python, rust]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate output for ${{ matrix.lang }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          length=5
+          expected=$((4 ** length))
+          output="$(make LENGTH="${length}" LANGUAGES="${{ matrix.lang }}" -s)"
+          echo "$output"
+
+          count="$(echo "$output" | sed -nE 's/Number of generated k-mers: ([0-9]+).*/\1/p' | head -n 1)"
+          duration="$(echo "$output" | awk -F ' - took ' '/Number of generated k-mers:/ { print $2; exit }')"
+
+          if [[ -z "$count" ]]; then
+            echo "Could not parse generated k-mer count for ${{ matrix.lang }}" >&2
+            exit 1
+          fi
+
+          if [[ "$count" -ne "$expected" ]]; then
+            echo "Unexpected count for ${{ matrix.lang }}: got $count expected $expected" >&2
+            exit 1
+          fi
+
+          if [[ -z "$duration" ]]; then
+            echo "Could not parse duration for ${{ matrix.lang }}" >&2
+            exit 1
+          fi
