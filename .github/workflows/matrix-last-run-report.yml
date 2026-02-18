@@ -21,7 +21,7 @@ permissions:
 
 jobs:
   build-report:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     env:
       GH_TOKEN: ${{ github.token }}
     steps:

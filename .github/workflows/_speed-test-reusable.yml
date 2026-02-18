@@ -43,7 +43,7 @@ jobs:
       fail-fast: false
       matrix:
         kmer: ${{ fromJson(inputs.kmer_values) }}
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - uses: actions/checkout@v4
@@ -84,7 +84,7 @@ jobs:
 
   result:
     needs: [kmer]
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - uses: actions/checkout@v4
