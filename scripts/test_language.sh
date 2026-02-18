@@ -3,6 +3,7 @@ set -euo pipefail
 
 lang="${1:-}"
 length="${2:-5}"
+allow_missing_runtime="${ALLOW_MISSING_RUNTIME:-false}"
 
 if [[ -z "$lang" ]]; then
   echo "Usage: $0 <language> [length]" >&2
@@ -35,6 +36,10 @@ required_cmd_for_lang() {
 
 required_cmd="$(required_cmd_for_lang "$lang")"
 if ! command -v "$required_cmd" >/dev/null 2>&1; then
+  if [[ "$allow_missing_runtime" == "true" ]]; then
+    echo "SKIP ${lang}: missing required command '${required_cmd}'"
+    exit 0
+  fi
   echo "Missing required command '${required_cmd}' for language '${lang}'" >&2
   exit 2
 fi

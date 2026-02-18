@@ -58,13 +58,17 @@ jobs:
           - lang: c
           - lang: cpp
           - lang: csharp
-            setup_dotnet_version: "7.x"
+            setup_dotnet_version: "6.x"
           - lang: coffeescript
             setup_node_version: "20"
             setup_command: "npm install --global coffeescript"
           - lang: erlang
+            setup_command: "sudo apt-get update && sudo apt-get install -y erlang"
           - lang: go
           - lang: haskell
+            setup_haskell_ghc: "9.0.2"
+            setup_haskell_cabal: "3.6.2.0"
+            setup_command: "cabal update"
           - lang: java
           - lang: js
             setup_node_version: "20"
@@ -93,6 +97,13 @@ jobs:
         with:
           node-version: ${{ matrix.setup_node_version }}
 
+      - name: Setup Haskell
+        if: ${{ matrix.setup_haskell_ghc }}
+        uses: haskell-actions/setup@v2
+        with:
+          ghc-version: ${{ matrix.setup_haskell_ghc }}
+          cabal-version: ${{ matrix.setup_haskell_cabal }}
+
       - name: Run custom setup
         if: ${{ matrix.setup_command }}
         shell: bash
@@ -101,8 +112,9 @@ jobs:
           ${{ matrix.setup_command }}
 
       - name: Validate output for ${{ matrix.lang }}
-        continue-on-error: ${{ matrix.optional == true }}
         shell: bash
+        env:
+          ALLOW_MISSING_RUNTIME: ${{ matrix.optional == true }}
         run: |
           set -euo pipefail
           bash scripts/test_language.sh "${{ matrix.lang }}" "${TEST_LENGTH}"
